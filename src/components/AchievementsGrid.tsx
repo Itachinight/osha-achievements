@@ -1,10 +1,8 @@
 import React, {forwardRef} from "react";
-import {AchievementWithUserData} from "../types";
+import {AchievementGroup} from "../types";
 import Achievement from "./Achievement";
 
-interface Props {
-    achievements: AchievementWithUserData[]
-}
+type Props = Pick<AchievementGroup, 'achievements'>
 
 const AchievementsGrid = forwardRef<HTMLDivElement, Props>(({achievements}, ref) => {
     return (

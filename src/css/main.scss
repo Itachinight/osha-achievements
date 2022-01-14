@@ -269,8 +269,8 @@ $breakpoint-small-mobile: 360px;
 
     flex-direction: column;
     padding: 8px;
-    min-height: 250px;
-    max-height: 250px;
+    min-height: 220px;
+    max-height: 220px;
     border-radius: 10px;
     background-color: white;
     box-shadow: var(--card-shadow);
@@ -326,8 +326,8 @@ $breakpoint-small-mobile: 360px;
 
 .achievement__icon {
     display: block;
-    width: 125px;
-    height: 125px;
+    width: 100px;
+    height: 100px;
     border-radius: 6px;
 
     .achievement_greyscale & {
@@ -335,8 +335,6 @@ $breakpoint-small-mobile: 360px;
     }
 
     @media (max-width: $breakpoint-small) {
-        width: 100px;
-        height: 100px;
         margin-right: 8px;
         grid-area: icon;
     }
