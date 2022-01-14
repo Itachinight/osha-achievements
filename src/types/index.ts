@@ -28,3 +28,5 @@ export interface AchievementGroup {
     progress: Progress
     achievements: AchievementWithUserData[]
 }
+
+export type NoneToVoidFunc = () => void;
