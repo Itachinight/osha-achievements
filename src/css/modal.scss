@@ -1,0 +1,116 @@
+@use 'breakpoints';
+
+.achievement-modal {
+    $delay: 600ms;
+
+    position: absolute;
+    border-radius: 10px;
+    background: white;
+    box-shadow: var(--card-shadow);
+    outline: none;
+
+    &_opened {
+
+    }
+
+    &_closing {
+
+    }
+
+    &__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .perspective-card {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        perspective: none;
+        cursor: default;
+    }
+
+    .perspective-card .achievement {
+        height: 100%;
+        transform: none !important;
+        will-change: unset;
+    }
+
+    .achievement__front-face {
+        height: 100%;
+        min-height: unset;
+        max-height: unset;
+        justify-content: center;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .achievement__body {
+        display: flex;
+    }
+
+    .achievement__body > * {
+        transition: all ease-in-out $delay;
+    }
+
+    .achievement__back-face {
+        display: none;
+    }
+
+    .achievement__description {
+        display: block;
+        max-height: 0;
+        text-align: center;
+        overflow: hidden;
+        transition: all ease-in-out $delay, max-height $delay * 0.75 linear $delay * 0.25 !important;
+    }
+
+    &_opening, &_opened {
+        .achievement__icon {
+            width: 275px;
+            height: 275px;
+
+            @media (max-width: breakpoints.$large-mobile) {
+                width: 225px;
+                height: 225px;
+            }
+        }
+
+        .achievement__title {
+            font-size: 24px;
+
+            @media (max-width: breakpoints.$large-mobile) {
+                font-size: 20px;
+            }
+        }
+
+        .achievement__description {
+            max-height: 65px;
+
+            @media (max-width: breakpoints.$small-mobile) {
+                max-height: 82px;
+            }
+        }
+
+        .achievement__progress {
+            width: 75%;
+            height: 11px;
+        }
+    }
+
+    &_closing, &_closed {
+        .achievement__front-face {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .achievement__description {
+            transition-delay: 0s !important;
+            max-height: 0;
+        }
+    }
+}

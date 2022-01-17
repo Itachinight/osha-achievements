@@ -30,3 +30,8 @@ export interface AchievementGroup {
 }
 
 export type NoneToVoidFunc = () => void;
+
+export interface ModalState {
+    activeAchievement: AchievementWithUserData | null
+    rect: DOMRect | null
+}

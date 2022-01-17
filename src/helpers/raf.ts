@@ -1,5 +1,5 @@
-import {NoneToVoidFunc} from "../types";
+import {NoneToVoidFunc} from '../types';
 
-export function raf(callback: NoneToVoidFunc) {
-    return window.requestAnimationFrame(callback);
+export function raf(callback: NoneToVoidFunc): void {
+    window.requestAnimationFrame(callback);
 }
