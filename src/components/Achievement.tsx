@@ -1,5 +1,5 @@
 import React, {FC, memo, useRef, useState} from 'react';
-import {AchievementWithUserData, NoneToVoidFunc} from '../types';
+import {AchievementWithUserData} from '../types';
 import {getAchievementPrizeClassName} from "../helpers/getAchievementPrizeClassName";
 import AchievementProgress from "./AchievementProgress";
 import AchievementDate from "./AchievementDate";
@@ -7,20 +7,19 @@ import {delay} from "../helpers/delay";
 
 interface Props {
     achievement: AchievementWithUserData
+    bothFaces?: boolean
     onClick?: (achievement: AchievementWithUserData, rect: DOMRect) => void
 }
 
-const Achievement: FC<Props> = ({achievement, onClick}) => {
+const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [isClicked, setIsClicked] = useState(false);
-
-    const handleClick: NoneToVoidFunc | undefined = onClick != null ?
-        () => {
-            setIsClicked(true);
-            delay(() => setIsClicked(false), 1000);
-            onClick(achievement, ref.current!.getBoundingClientRect());
-        } :
-        undefined;
+    
+    const handleClick = () => {
+        setIsClicked(true);
+        delay(() => setIsClicked(false), 500);
+        onClick?.(achievement, ref.current!.getBoundingClientRect());
+    };
 
     const achievementClassName = ['achievement'];
 
@@ -55,9 +54,11 @@ const Achievement: FC<Props> = ({achievement, onClick}) => {
                         <i className={['achievement__prize', getAchievementPrizeClassName(achievement)].join(' ')}/>
                     </div>
                 </div>
-                <div className='achievement__back-face'>
-                    {achievement.description}
-                </div>
+                {bothFaces &&
+                    <div className='achievement__back-face'>
+                        {achievement.description}
+                    </div>
+                }
             </div>
 
         </div>

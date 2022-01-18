@@ -20,6 +20,7 @@ export interface AchievementWithUserData {
     isUnread: boolean
     progress?: Progress
     date?: string | null
+    rarity: number
 }
 
 export interface AchievementGroup {

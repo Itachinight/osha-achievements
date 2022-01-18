@@ -91,7 +91,7 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
             onRequestClose={handleClose}
             shouldCloseOnOverlayClick={true}
         >
-            {isOpen && <Achievement achievement={activeAchievement}/>}
+            {isOpen && <Achievement achievement={activeAchievement} bothFaces={true}/>}
         </ReactModal>
     )
 };
