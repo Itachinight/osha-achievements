@@ -15,7 +15,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
                 current: 1,
                 max: 5
             },
-            rarity: 95.2,
+            rarity: 3,
         },
         {
             id: 2,
@@ -30,7 +30,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
                 max: 100
             },
             date: null,
-            rarity: 95.2,
+            rarity: 7.6,
         },
         {
             id: 3,
@@ -41,7 +41,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             isCompleted: true,
             isUnread: false,
             date: '12.12.21 15:35',
-            rarity: 95.2,
+            rarity: 1.7,
         },
         {
             id: 4,
@@ -56,7 +56,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
                 current: 8,
                 max: 10
             },
-            rarity: 95.2,
+            rarity: 0.4,
         },
         {
             id: 5,
@@ -67,7 +67,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             isCompleted: true,
             isUnread: true,
             date: '12.01.21 16:04',
-            rarity: 95.2,
+            rarity: 14.7,
         },
         {
             id: 6,
@@ -78,7 +78,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             isCompleted: true,
             isUnread: true,
             date: '12.12.21 15:35',
-            rarity: 95.2,
+            rarity: 3.2,
         },
         {
             id: 7,
@@ -93,7 +93,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
                 current: 5,
                 max: 10
             },
-            rarity: 95.2,
+            rarity: 53,
         }
     ];
 

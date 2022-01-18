@@ -57,19 +57,29 @@
         transition: all ease-in-out $delay;
     }
 
-    .achievement__description {
-        display: block;
+    %max-height-zero {
         max-height: 0;
-        text-align: center;
-        line-height: 18px;
         overflow: hidden;
         transition: all ease-in-out $delay, max-height $delay * 0.75 linear $delay * 0.25 !important;
     }
 
+    .achievement__description {
+        @extend %max-height-zero;
+
+        display: block;
+        line-height: 18px;
+    }
+
+    .achievement__rarity {
+        @extend %max-height-zero;
+
+        display: block;
+    }
+
     &_opening, &_opened {
         .achievement__icon {
-            width: 275px;
-            height: 275px;
+            width: 270px;
+            height: 270px;
 
             @media (max-width: breakpoints.$large-mobile) {
                 width: 200px;
@@ -90,6 +100,14 @@
 
             @media (max-width: breakpoints.$small-mobile) {
                 max-height: 82px;
+            }
+        }
+
+        .achievement__rarity {
+            max-height: 14px;
+
+            @media (max-width: breakpoints.$small-mobile) {
+                max-height: 28px;
             }
         }
 

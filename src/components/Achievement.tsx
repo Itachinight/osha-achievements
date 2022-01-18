@@ -4,6 +4,7 @@ import {getAchievementPrizeClassName} from "../helpers/getAchievementPrizeClassN
 import AchievementProgress from "./AchievementProgress";
 import AchievementDate from "./AchievementDate";
 import {delay} from "../helpers/delay";
+import AchievementRarity from "./AchievementRarity";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -48,6 +49,7 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
                             {achievement.description}
                         </div>
                         {achievement.progress != null && <AchievementProgress progress={achievement.progress}/>}
+                        <AchievementRarity rarity={achievement.rarity}/>
                     </div>
                     <div className='achievement__footer'>
                         {achievement.date != null && <AchievementDate date={achievement.date}/>}
