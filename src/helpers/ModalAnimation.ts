@@ -22,10 +22,10 @@ export class ModalAnimation {
                     left: '5%',
                     opacity: 1,
                 } : {
-                    width: '600px',
+                    width: '500px',
                     height: '450px',
                     top: 'calc(50% - 225px)',
-                    left: 'calc(50% - 300px)',
+                    left: 'calc(50% - 250px)',
                     opacity: 1,
                 },
             ],

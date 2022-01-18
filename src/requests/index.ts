@@ -11,6 +11,10 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             isCompleted: false,
             isUnread: false,
             date: null,
+            progress: {
+                current: 1,
+                max: 5
+            }
         },
         {
             id: 2,

@@ -65,6 +65,7 @@
         display: block;
         max-height: 0;
         text-align: center;
+        line-height: 18px;
         overflow: hidden;
         transition: all ease-in-out $delay, max-height $delay * 0.75 linear $delay * 0.25 !important;
     }
@@ -75,8 +76,8 @@
             height: 275px;
 
             @media (max-width: breakpoints.$large-mobile) {
-                width: 225px;
-                height: 225px;
+                width: 200px;
+                height: 200px;
             }
         }
 

@@ -21,8 +21,8 @@ enum ModalOpenCloseState {
 }
 
 const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
-    const [modalOpenCloseState, setModalOpenCloseState] = useState<ModalOpenCloseState>(ModalOpenCloseState.AfterClose);
     const ref = useRef<HTMLElement | null>(null);
+    const [modalOpenCloseState, setModalOpenCloseState] = useState<ModalOpenCloseState>(ModalOpenCloseState.AfterClose);
 
     useEffect(() => {
         if (rect == null || activeAchievement == null) {
@@ -41,12 +41,16 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
                 }
             });
 
+            document.body.classList.add('scroll-locked');
+
             delay(() => setModalOpenCloseState(ModalOpenCloseState.BeforeOpen));
         });
     }, [activeAchievement, rect]);
 
     const handleClose = useCallback(() => {
         setModalOpenCloseState(ModalOpenCloseState.BeforeClose);
+
+        document.body.classList.remove('scroll-locked');
 
         const handleModalClose = () => {
             onClose();
@@ -74,18 +78,20 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
         className.push('achievement-modal_closing');
     }
 
+    const isOpen = activeAchievement != null;
+
     return (
         <ReactModal
-            bodyOpenClassName='scroll-locked'
+            bodyOpenClassName={null}
             className={className.join(' ')}
             contentRef={(elem) => ref.current = elem}
-            isOpen={activeAchievement != null}
+            isOpen={isOpen}
             portalClassName='achievement-modal__portal'
             overlayClassName='achievement-modal__overlay'
             onRequestClose={handleClose}
             shouldCloseOnOverlayClick={true}
         >
-            {activeAchievement && <Achievement achievement={activeAchievement}/>}
+            {isOpen && <Achievement achievement={activeAchievement}/>}
         </ReactModal>
     )
 };
