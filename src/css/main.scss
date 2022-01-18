@@ -22,7 +22,10 @@
 
 body.scroll-locked {
     overflow: hidden;
-    padding-right: var(--scrollbar-width);
+
+    .achievements-container {
+        padding-right: var(--scrollbar-width);
+    }
 }
 
 .achievements-container {

@@ -135,6 +135,17 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             date: null,
             rarity: 27.7,
         },
+        {
+            id: 12,
+            cost: 2,
+            icon: 'https://online-shkola.com.ua/public/img/achievements/12.PNG',
+            title: 'Жизнь без долгов',
+            description: 'Оплатить обучение до конца учебного года (платеж должен быть не менее, чем за 3 месяца).',
+            isCompleted: true,
+            isUnread: false,
+            date: '18.01.22 10:11',
+            rarity: 9.1,
+        },
     ];
 
     return [
