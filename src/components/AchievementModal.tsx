@@ -50,9 +50,8 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
     const handleClose = useCallback(() => {
         setModalOpenCloseState(ModalOpenCloseState.BeforeClose);
 
-        document.body.classList.remove('scroll-locked');
-
         const handleModalClose = () => {
+            document.body.classList.remove('scroll-locked');
             onClose();
             setModalOpenCloseState(ModalOpenCloseState.AfterClose);
         };

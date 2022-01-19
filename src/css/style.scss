@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
-@use 'keyframes';
-@use 'main';
-@use 'modal';
+@use "abstracts/variables";
+
+@use 'base/keyframes';
+
+@use "layout/containers";
+
+@use 'components/achievements-header';
+@use 'components/achievement-group';
+@use 'components/achievement';
+@use 'components/achievement-modal';

@@ -1,0 +1,123 @@
+@use '../abstracts/breakpoints';
+@use '../abstracts/mixins';
+
+.achievement-group {
+    margin: 30px auto;
+
+    &_overflow-hidden {
+        overflow-y: hidden;
+    }
+
+    > summary {
+        display: block;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        margin-bottom: 15px;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            flex-direction: column;
+        }
+    }
+
+    &__line {
+        height: 2px;
+        width: 100%;
+        margin: 0;
+        background-color: rgba(0, 141, 210, 0.6);
+        border: none;
+        border-radius: 3px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: var(--blue);
+        cursor: pointer;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    &__progress {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            margin-top: 10px;
+            width: 80%;
+            max-width: unset;
+        }
+
+        > span {
+            display: block;
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 4px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            color: var(--lightblack);
+            user-select: none;
+        }
+
+        > progress {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            padding: 2px;
+            height: 24px;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid var(--blue);
+            box-shadow: inset 0 0 5px 1px rgba(0, 141, 210, 0.3);
+            border-radius: 15px;
+            transition: all 500ms linear;
+
+            &::-webkit-progress-bar {
+                background-color: transparent;
+                border-radius: 15px;
+            }
+
+            @mixin progress-value {
+                background-color: var(--blue);
+                background-image: linear-gradient(-45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+                background-size: 20px 20px;
+                border-radius: 15px;
+                transition: all 500ms linear;
+            }
+
+            &::-webkit-progress-value {
+                @include progress-value;
+            }
+
+            &::-moz-progress-bar {
+                @include progress-value;
+            }
+        }
+    }
+}
+
+.achievements-grid {
+    @include mixins.flex-center;
+
+    margin: 6px auto;
+    flex-wrap: wrap;
+}

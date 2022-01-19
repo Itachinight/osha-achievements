@@ -1,4 +1,4 @@
-@use 'breakpoints';
+@use '../abstracts/breakpoints';
 
 .achievement-modal {
     $delay: 600ms;
@@ -48,6 +48,10 @@
         justify-content: center;
         padding-left: 15px;
         padding-right: 15px;
+    }
+
+    .achievement__front-face::after {
+        content: none;
     }
 
     .achievement__body {

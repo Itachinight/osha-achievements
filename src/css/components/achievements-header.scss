@@ -1,0 +1,73 @@
+@use '../abstracts/breakpoints';
+
+.achievements-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 10px;
+
+    @media (max-width: breakpoints.$tablet) {
+        justify-content: center;
+    }
+}
+
+
+.trophy {
+    --size: 58px;
+
+    height: var(--size);
+    width: var(--size);
+    background-size: contain;
+    margin-right: 20px;
+
+    @media (max-width: breakpoints.$large-mobile) {
+        --size: 48px;
+    }
+
+    @media (max-width: breakpoints.$small-mobile) {
+        --size: 42px;
+    }
+
+    &:last-of-type {
+        margin-right: 0;
+    }
+
+    &_bronze {
+        background-image: var(--bronze-trophy-url);
+    }
+
+    &_silver {
+        background-image: var(--silver-trophy-url);
+    }
+
+    &_golden {
+        background-image: var(--golden-trophy-url);
+    }
+
+    @mixin narrow-trophy($background-image) {
+        --height: 60px;
+        --width: 40px;
+
+        height: var(--height);
+        width: var(--width);
+        background-image: $background-image;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            --height: 48px;
+            --width: 32px;
+        }
+
+        @media (max-width: breakpoints.$small-mobile) {
+            --height: 42px;
+            --width: 28px;
+        }
+    }
+
+    &_ruby {
+        @include narrow-trophy(var(--ruby-trophy-url));
+    }
+
+    &_platinum {
+        @include narrow-trophy(var(--platinum-trophy-url));
+    }
+}

@@ -1,0 +1,19 @@
+@use '../abstracts/breakpoints';
+
+body.scroll-locked {
+    overflow: hidden;
+
+    #root {
+        padding-right: var(--scrollbar-width);
+    }
+}
+
+@media only screen and (max-width: breakpoints.$tablet) {
+    .container {
+        width: 95%;
+    }
+}
+
+.achievements-container {
+    padding: 30px 0;
+}
