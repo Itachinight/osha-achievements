@@ -41,7 +41,7 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
             <div className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
-                        <img className='achievement__icon' src={achievement.icon} alt={achievement.title}/>
+                        <img className='achievement__icon' src={achievement.icon} alt={achievement.title} loading='lazy'/>
                         <h3 className='achievement__title'>
                             {achievement.title}
                         </h3>
@@ -62,7 +62,6 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
                     </div>
                 }
             </div>
-
         </div>
     );
 };
