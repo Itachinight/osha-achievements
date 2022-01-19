@@ -11,13 +11,13 @@
     }
 }
 
-
 .trophy {
     --size: 58px;
 
     height: var(--size);
     width: var(--size);
     background-size: contain;
+    background-image: var(--img);
     margin-right: 20px;
 
     @media (max-width: breakpoints.$large-mobile) {
@@ -33,24 +33,23 @@
     }
 
     &_bronze {
-        background-image: var(--bronze-trophy-url);
+        --img: var(--bronze-trophy-url);
     }
 
     &_silver {
-        background-image: var(--silver-trophy-url);
+        --img: var(--silver-trophy-url);
     }
 
     &_golden {
-        background-image: var(--golden-trophy-url);
+        --img: var(--golden-trophy-url);
     }
 
-    @mixin narrow-trophy($background-image) {
+    @mixin narrow-trophy {
         --height: 60px;
         --width: 40px;
 
         height: var(--height);
         width: var(--width);
-        background-image: $background-image;
 
         @media (max-width: breakpoints.$large-mobile) {
             --height: 48px;
@@ -64,10 +63,14 @@
     }
 
     &_ruby {
-        @include narrow-trophy(var(--ruby-trophy-url));
+        @include narrow-trophy;
+
+        --img: var(--ruby-trophy-url);
     }
 
     &_platinum {
-        @include narrow-trophy(var(--platinum-trophy-url));
+        @include narrow-trophy;
+
+        --img: var(--platinum-trophy-url);
     }
 }

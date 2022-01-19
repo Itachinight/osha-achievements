@@ -8,7 +8,7 @@ config.optimization.splitChunks = {
     }
 };
 
-config.devtool = 'hidden-source-map';
+delete config.devtool;
 config.optimization.runtimeChunk = false;
 config.output.filename = 'static/js/achievements.min.js';
 config.plugins[5].options.filename = 'static/css/achievements.css';

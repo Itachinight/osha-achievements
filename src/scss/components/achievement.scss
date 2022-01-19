@@ -31,7 +31,7 @@
     @media (min-width: breakpoints.$tablet + 1) {
         $duration: 550ms;
 
-        transition: transform $duration linear 75ms;
+        transition: transform $duration linear 50ms;
         transform-style: preserve-3d;
         will-change: transform;
 
@@ -90,7 +90,7 @@
             left: -150%;
             z-index: 10;
             filter: blur(4px);
-            animation: moving-flare 2.5s ease-in-out 2s infinite;
+            animation: moving-flare 3s ease-in-out 3s infinite;
         }
     }
 
@@ -251,6 +251,7 @@
             border-radius: 5px;
         }
 
+        // Use separate rules here, because merging them won't be processed right by browsers
         &::-webkit-progress-value {
             @include progress-value;
         }
