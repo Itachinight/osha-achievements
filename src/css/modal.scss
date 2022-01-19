@@ -58,6 +58,10 @@
         transition: all ease-in-out $delay;
     }
 
+    .achievement__icon {
+        will-change: width, height;
+    }
+
     %max-height-zero {
         max-height: 0;
         overflow: hidden;
@@ -69,6 +73,13 @@
 
         display: block;
         line-height: 18px;
+    }
+
+    .achievement__progress {
+        @media (max-width: breakpoints.$tablet) {
+            transition: opacity $delay * 0.25 linear $delay !important;
+            opacity: 0;
+        }
     }
 
     .achievement__rarity {
@@ -104,17 +115,18 @@
             }
         }
 
+        .achievement__progress {
+            width: 80%;
+            height: 11px;
+            opacity: 1;
+        }
+
         .achievement__rarity {
             max-height: 14px;
 
             @media (max-width: breakpoints.$small-mobile) {
                 max-height: 28px;
             }
-        }
-
-        .achievement__progress {
-            width: 75%;
-            height: 11px;
         }
     }
 
@@ -127,6 +139,12 @@
         .achievement__description {
             transition-delay: 0s !important;
             max-height: 0;
+        }
+
+        .achievement__progress {
+            @media (max-width: breakpoints.$tablet) {
+                display: none;
+            }
         }
     }
 }
