@@ -1,7 +1,7 @@
 @use '../abstracts/breakpoints';
 
 .achievement-modal {
-    $delay: 600ms;
+    $duration: 600ms;
 
     position: absolute;
     border-radius: 10px;
@@ -37,8 +37,11 @@
 
     .perspective-card .achievement {
         height: 100%;
-        transform: none !important;
         will-change: unset;
+    }
+
+    .perspective-card:hover .achievement {
+        transform: none;
     }
 
     .achievement__front-face {
@@ -46,8 +49,6 @@
         min-height: unset;
         max-height: unset;
         justify-content: center;
-        padding-left: 15px;
-        padding-right: 15px;
     }
 
     .achievement__front-face::after {
@@ -59,7 +60,7 @@
     }
 
     .achievement__body > * {
-        transition: all ease-in-out $delay;
+        transition: all ease-in-out $duration;
     }
 
     .achievement__icon {
@@ -70,7 +71,7 @@
     %max-height-zero {
         max-height: 0;
         overflow: hidden;
-        transition: all ease-in-out $delay, max-height $delay * 0.75 linear $delay * 0.25 !important;
+        transition: all ease-in-out $duration, max-height $duration * 0.65 ease-in-out $duration * 0.35;
     }
 
     .achievement__description {
@@ -82,7 +83,7 @@
 
     .achievement__progress {
         @media (max-width: breakpoints.$tablet) {
-            transition: opacity $delay * 0.25 linear $delay !important;
+            transition: opacity $duration * 0.3 linear $duration * 0.8;
             opacity: 0;
         }
     }
@@ -135,17 +136,24 @@
         }
     }
 
-    &_closing, &_closed {
-        .achievement__front-face {
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-
-        .achievement__description {
+    &_closing {
+        .achievement__description, .achievement__rarity {
             transition-delay: 0s !important;
             max-height: 0;
         }
+    }
 
+    &_near-closed, &_closed {
+        .achievement__description {
+            display: none;
+        }
+
+        .achievement__rarity {
+            display: none;
+        }
+    }
+
+    &_closing, &_near-closed, &_closed {
         .achievement__progress {
             @media (max-width: breakpoints.$tablet) {
                 display: none;

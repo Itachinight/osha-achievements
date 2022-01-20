@@ -1,12 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
-import {AchievementGroup as AchievementGroupType} from "../types";
+import {AchievementGroup as AchievementGroupType, AchievementStats as AchievementStatsType} from "../types";
 import {getAchievementData} from "../requests";
-import AchievementsHeader from "./AchievementsHeader";
+import AchievementStats from "./AchievementStats";
 import AchievementGroup from "./AchievementGroup";
-import {useScrollbarWidth} from "react-use";
+import {useEffectOnce, useScrollbarWidth} from "react-use";
 
 const App: FC = () => {
     const [achievementGroups, setAchievementGroups] = useState<AchievementGroupType[]>([]);
+    const [achievementStats, setAchievementStats] = useState<AchievementStatsType | null>(null);
     const scrollbarWidth = useScrollbarWidth();
 
     useEffect(() => {
@@ -16,16 +17,28 @@ const App: FC = () => {
         );
     }, [scrollbarWidth]);
 
-    useEffect(() => {
-        getAchievementData(NaN).then(setAchievementGroups);
-    }, []);
+    useEffectOnce(() => {
+        getAchievementData(NaN).then(async (groups) => {
+            setAchievementGroups(groups);
+            setAchievementStats({
+                bronze: 3,
+                silver: 1,
+                golden: 4,
+                ruby: 2,
+                platinum: 0,
+                totalPoints: 180,
+                progress: {
+                    current: 6,
+                    max: 135
+                }
+            });
+        });
+    });
 
     return (
         <div className='container'>
-            <div className='achievements-container'>
-                <AchievementsHeader/>
-                {achievementGroups.map((group) => <AchievementGroup key={group.id} group={group}/>)}
-            </div>
+            {achievementStats && <AchievementStats stats={achievementStats}/>}
+            {achievementGroups.map((group) => <AchievementGroup key={group.id} group={group}/>)}
         </div>
     );
 }

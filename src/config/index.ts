@@ -1,1 +1,2 @@
-export {};
+export const MODAL_NEAR_CLOSE_DELAY = 400;
+export const MODAL_ANIMATION_DURATION = 600;

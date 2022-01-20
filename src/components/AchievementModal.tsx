@@ -6,6 +6,8 @@ import Achievement from './Achievement';
 import {ModalAnimation} from '../helpers/ModalAnimation';
 import {delay} from '../helpers/delay';
 import {isSmallWidth} from "../helpers/isSmallWidth";
+import {MODAL_NEAR_CLOSE_DELAY} from "../config";
+import {PREFERS_REDUCE_MOTION} from "../env";
 
 interface Props {
     activeAchievement: AchievementWithUserData | null
@@ -17,12 +19,13 @@ enum ModalOpenCloseState {
     BeforeOpen,
     AfterOpen,
     BeforeClose,
-    AfterClose
+    NearClose,
+    Closed
 }
 
 const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
     const ref = useRef<HTMLElement | null>(null);
-    const [modalOpenCloseState, setModalOpenCloseState] = useState<ModalOpenCloseState>(ModalOpenCloseState.AfterClose);
+    const [modalOpenCloseState, setModalOpenCloseState] = useState<ModalOpenCloseState>(ModalOpenCloseState.Closed);
 
     useEffect(() => {
         if (rect == null || activeAchievement == null) {
@@ -30,15 +33,8 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
         }
 
         raf(() => {
-            const animation = ModalAnimation.animateOpen(ref.current!, rect, isSmallWidth());
-
-            animation.addEventListener('finish', () => {
+            ModalAnimation.animateOpen(ref.current!, rect, isSmallWidth(), () => {
                 setModalOpenCloseState(ModalOpenCloseState.AfterOpen);
-
-                if ('commitStyles' in animation) {
-                    animation.commitStyles();
-                    animation.cancel();
-                }
             });
 
             document.body.classList.add('scroll-locked');
@@ -53,13 +49,17 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
         const handleModalClose = () => {
             document.body.classList.remove('scroll-locked');
             onClose();
-            setModalOpenCloseState(ModalOpenCloseState.AfterClose);
+            setModalOpenCloseState(ModalOpenCloseState.Closed);
         };
 
         if (rect == null) {
             handleModalClose();
         } else {
-            ModalAnimation.animateClose(ref.current!, rect).addEventListener('finish', handleModalClose);
+            ModalAnimation.animateClose(ref.current!, rect, isSmallWidth(), handleModalClose);
+        }
+
+        if (!PREFERS_REDUCE_MOTION) {
+            delay(() => setModalOpenCloseState(ModalOpenCloseState.NearClose), MODAL_NEAR_CLOSE_DELAY);
         }
     }, [rect, onClose]);
 
@@ -75,6 +75,10 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
 
     if (modalOpenCloseState === ModalOpenCloseState.BeforeClose) {
         className.push('achievement-modal_closing');
+    }
+
+    if (modalOpenCloseState === ModalOpenCloseState.NearClose) {
+        className.push('achievement-modal_near-closed');
     }
 
     const isOpen = activeAchievement != null;

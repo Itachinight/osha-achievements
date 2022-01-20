@@ -1,0 +1,126 @@
+@use '../abstracts/breakpoints';
+@use '../abstracts/mixins';
+
+.achievement-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px auto;
+    padding: 0 10px;
+
+    @media (max-width: breakpoints.$tablet) {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__trophies {
+        > h4 {
+            margin: 0 auto 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+
+        > div {
+            @include mixins.flex-center;
+        }
+    }
+
+    &__points {
+        text-align: center;
+        color: var(--blue);
+        font-size: 52px;
+        font-weight: 600;
+        letter-spacing: 1px;
+
+        @media (max-width: breakpoints.$tablet) {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: breakpoints.$large-mobile) {
+            font-size: 40px;
+        }
+    }
+}
+
+.achievement-trophy {
+    @include mixins.flex-center;
+
+    flex-direction: column;
+    margin-right: 25px;
+
+    &:last-of-type {
+        margin-right: 0;
+    }
+
+    &__image {
+        --size: 50px;
+
+        position: relative;
+        display: block;
+        height: var(--size);
+        width: var(--size);
+        margin-bottom: 8px;
+        background-size: contain;
+        background-image: var(--img);
+
+        @media (max-width: breakpoints.$large-mobile) {
+            --size: 45px;
+        }
+
+        @media (max-width: breakpoints.$small-mobile) {
+            --size: 40px;
+        }
+
+        &_bronze {
+            --img: var(--bronze-trophy-url);
+        }
+
+        &_silver {
+            --img: var(--silver-trophy-url);
+        }
+
+        &_golden {
+            --img: var(--golden-trophy-url);
+        }
+
+        @mixin narrow-trophy {
+            --height: 51px;
+            --width: 34px;
+
+            height: var(--height);
+            width: var(--width);
+
+            @media (max-width: breakpoints.$large-mobile) {
+                --height: 45px;
+                --width: 30px;
+            }
+
+            @media (max-width: breakpoints.$small-mobile) {
+                --height: 42px;
+                --width: 28px;
+            }
+        }
+
+        &_ruby {
+            @include narrow-trophy;
+
+            --img: var(--ruby-trophy-url);
+        }
+
+        &_platinum {
+            @include narrow-trophy;
+
+            --img: var(--platinum-trophy-url);
+        }
+    }
+
+    &__count {
+        color: var(--lightblack);
+        font-size: 18px;
+        line-height: 18px;
+        font-weight: 600;
+        user-select: none;
+    }
+}

@@ -36,3 +36,13 @@ export interface ModalState {
     activeAchievement: AchievementWithUserData | null
     rect: DOMRect | null
 }
+
+export interface AchievementStats {
+    bronze: number
+    silver: number
+    golden: number
+    ruby: number
+    platinum: number
+    totalPoints: number
+    progress: Progress
+}

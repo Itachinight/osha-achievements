@@ -131,7 +131,7 @@
 .achievement__body {
     @include mixins.flex-center;
 
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-direction: column;
     flex-grow: 1;
     width: 100%;

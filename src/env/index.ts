@@ -1,1 +1,1 @@
-export {};
+export const PREFERS_REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
