@@ -2,11 +2,10 @@
 @use '../abstracts/mixins';
 
 .achievement-stats {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 30px auto;
-    padding: 0 10px;
+    @include mixins.flex-center;
+
+    justify-content: space-evenly;
+    margin: 30px auto 50px;
 
     @media (max-width: breakpoints.$tablet) {
         flex-direction: column;

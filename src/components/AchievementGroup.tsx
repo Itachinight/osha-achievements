@@ -63,27 +63,29 @@ const AchievementGroup: FC<Props> = ({group}) => {
         }
     };
 
-    const detailsClass = ['achievement-group'];
+    const detailsClass = ['achievement-group__spoiler'];
 
     if (isOverflowHidden) {
-        detailsClass.push('achievement-group_overflow-hidden');
+        detailsClass.push('achievement-group__spoiler_overflow-hidden');
     }
 
     const style = fixedHeight !== null ? {height: fixedHeight} : undefined;
 
     return (
-        <details ref={detailsRef} className={detailsClass.join(' ')} open={isOpen} style={style}>
-            <summary ref={summaryRef} onClick={preventDefault}>
-                <div className='achievement-group__header'>
-                    <h3 className='achievement-group__title' onClick={handleClick}>
-                        {group.title}
-                    </h3>
-                    <AchievementGroupProgress progress={group.progress}/>
-                </div>
-                <hr className='achievement-group__line'/>
-            </summary>
-            <AchievementsGrid ref={containerRef} achievements={group.achievements}/>
-        </details>
+        <section className='achievement-group'>
+            <details ref={detailsRef} className={detailsClass.join(' ')} open={isOpen} style={style}>
+                <summary ref={summaryRef} onClick={preventDefault}>
+                    <div className='achievement-group__header'>
+                        <h3 className='achievement-group__title' onClick={handleClick}>
+                            {group.title}
+                        </h3>
+                        <AchievementGroupProgress progress={group.progress}/>
+                    </div>
+                    <hr className='achievement-group__line'/>
+                </summary>
+                <AchievementsGrid ref={containerRef} achievements={group.achievements}/>
+            </details>
+        </section>
     );
 };
 

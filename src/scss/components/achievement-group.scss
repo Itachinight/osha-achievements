@@ -4,17 +4,19 @@
 .achievement-group {
     margin: 30px auto;
 
-    &_overflow-hidden {
-        overflow-y: hidden;
-    }
+    &__spoiler {
+        &_overflow-hidden {
+            overflow-y: hidden;
+        }
 
-    > summary {
-        display: block;
-        list-style: none;
-        cursor: default;
+        > summary {
+            display: block;
+            list-style: none;
+            cursor: default;
 
-        &::-webkit-details-marker {
-            display: none;
+            &::-webkit-details-marker {
+                display: none;
+            }
         }
     }
 
