@@ -44,7 +44,7 @@ const AchievementGroup: FC<Props> = ({group}) => {
 
                 setIsAnimationPlaying(true);
 
-                animateElementHeight(details, initHeight, endHeight).addEventListener('finish', () => {
+                animateElementHeight(details, initHeight, endHeight, () => {
                     setIsOverflowHidden(false);
                     setFixedHeight(null);
                     setIsAnimationPlaying(false);
@@ -55,7 +55,7 @@ const AchievementGroup: FC<Props> = ({group}) => {
 
             setIsAnimationPlaying(true);
 
-            animateElementHeight(details, details.offsetHeight, summary.offsetHeight).addEventListener('finish', () => {
+            animateElementHeight(details, details.offsetHeight, summary.offsetHeight, () => {
                 setIsAnimationPlaying(false);
                 setIsOverflowHidden(false);
                 setIsOpen(false);

@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
-@use "abstracts/variables";
+@use 'abstracts/variables';
 
 @use 'base/keyframes';
 
-@use "layout/containers";
+@use 'layout/containers';
 
+@use 'components/page-description';
 @use 'components/achievement-stats';
 @use 'components/achievement-group';
 @use 'components/achievement';

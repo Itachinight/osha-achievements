@@ -154,8 +154,8 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             title: 'Исследователь интерфейса',
             achievements,
             progress: {
-                current: 2,
-                max: 7,
+                current: 7,
+                max: 12,
             }
         }
     ];

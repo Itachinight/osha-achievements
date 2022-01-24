@@ -3,6 +3,7 @@ import {NoneToVoidFunc} from "../types";
 import {objectEntries} from "./objectEntries";
 import {MODAL_ANIMATION_DURATION} from "../config";
 import {PREFERS_REDUCE_MOTION} from "../env";
+import {supportsAnimate} from "./supportsAnimate";
 
 type ModalAnimationState = {
     width: string
@@ -23,7 +24,7 @@ export class ModalAnimation {
         const from = ModalAnimation.buildStateFromRect(rect);
         const to = ModalAnimation.getOpenState(isMobile);
 
-        if (ModalAnimation.supportsAnimate(elem)) {
+        if (supportsAnimate(elem)) {
             const animation = elem.animate([from, to], ModalAnimation.options);
 
             animation.addEventListener('finish', () => {
@@ -43,7 +44,7 @@ export class ModalAnimation {
         const from = ModalAnimation.getOpenState(isMobile);
         const to = ModalAnimation.buildStateFromRect(rect);
 
-        if (ModalAnimation.supportsAnimate(elem)) {
+        if (supportsAnimate(elem)) {
             const animation = elem.animate([from, to], ModalAnimation.options);
 
             animation.addEventListener('finish', onFinish);
@@ -76,10 +77,6 @@ export class ModalAnimation {
             left: `${rect.left}px`,
             opacity: 0.25,
         };
-    }
-
-    private static supportsAnimate(elem: HTMLElement): boolean {
-        return 'animate' in elem;
     }
 
     private static fallbackAnimation(

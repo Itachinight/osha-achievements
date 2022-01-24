@@ -10,5 +10,7 @@ export function getAchievementPrizeClassName(achievement: AchievementWithUserDat
             return 'achievement__prize_golden';
         case AchievementCost.RUBY:
             return 'achievement__prize_ruby';
+        case AchievementCost.PLATINUM:
+            return 'achievement__prize_platinum';
     }
 }

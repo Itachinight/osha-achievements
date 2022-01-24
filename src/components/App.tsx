@@ -1,45 +1,38 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {AchievementGroup as AchievementGroupType, AchievementStats as AchievementStatsType} from "../types";
 import {getAchievementData} from "../requests";
 import AchievementStats from "./AchievementStats";
 import AchievementGroup from "./AchievementGroup";
-import {useEffectOnce, useScrollbarWidth} from "react-use";
+import {useEffectOnce} from "react-use";
+import TranslationContext from './contexts/TranslationContext';
+import {getTranslation, ruTranslation, Translation} from "../localization";
+import AchievementDescription from "./AchievementDescription";
+import {useScrollbarWidthCustomProperty} from "../hooks/useScrollbarWidthCustomProperty";
+import {makeAchievementStats} from "../helpers/makeAchievementStats";
 
 const App: FC = () => {
     const [achievementGroups, setAchievementGroups] = useState<AchievementGroupType[]>([]);
     const [achievementStats, setAchievementStats] = useState<AchievementStatsType | null>(null);
-    const scrollbarWidth = useScrollbarWidth();
+    const [translation, setTranslation] = useState<Translation>(ruTranslation);
 
-    useEffect(() => {
-        document.documentElement.style.setProperty(
-            '--scrollbar-width',
-            scrollbarWidth != null ? `${scrollbarWidth}px` : '0'
-        );
-    }, [scrollbarWidth]);
+    useScrollbarWidthCustomProperty();
 
     useEffectOnce(() => {
         getAchievementData(NaN).then(async (groups) => {
             setAchievementGroups(groups);
-            setAchievementStats({
-                bronze: 3,
-                silver: 1,
-                golden: 4,
-                ruby: 2,
-                platinum: 0,
-                totalPoints: 180,
-                progress: {
-                    current: 6,
-                    max: 135
-                }
-            });
+            setAchievementStats(makeAchievementStats(groups));
+            setTranslation(getTranslation(Math.random() <= 0.5 ? 'ua' : 'ru'));
         });
     });
 
     return (
-        <div className='container'>
-            {achievementStats && <AchievementStats stats={achievementStats}/>}
-            {achievementGroups.map((group) => <AchievementGroup key={group.id} group={group}/>)}
-        </div>
+        <TranslationContext.Provider value={translation}>
+            <div className='container'>
+                <AchievementDescription/>
+                {achievementStats && <AchievementStats stats={achievementStats}/>}
+                {achievementGroups.map((group) => <AchievementGroup key={group.id} group={group}/>)}
+            </div>
+        </TranslationContext.Provider>
     );
 }
 

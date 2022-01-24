@@ -1,8 +1,11 @@
+export type Lang = 'ru' | 'ua';
+
 export enum AchievementCost {
     BRONZE,
     SILVER,
     GOLDEN,
     RUBY,
+    PLATINUM
 }
 
 interface Progress {
@@ -43,6 +46,7 @@ export interface AchievementStats {
     golden: number
     ruby: number
     platinum: number
+    groupsCompleted: number
     totalPoints: number
     progress: Progress
 }

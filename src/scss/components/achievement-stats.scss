@@ -54,7 +54,7 @@
     }
 
     &__image {
-        --size: 50px;
+        --size: 51px;
 
         position: relative;
         display: block;
@@ -63,6 +63,8 @@
         margin-bottom: 8px;
         background-size: contain;
         background-image: var(--img);
+        background-repeat: no-repeat;
+        background-position: center;
 
         @media (max-width: breakpoints.$large-mobile) {
             --size: 45px;
