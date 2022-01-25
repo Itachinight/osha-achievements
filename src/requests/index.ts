@@ -152,6 +152,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
         {
             id: 1,
             title: 'Исследователь интерфейса',
+            isCompleteAnnounced: true,
             achievements,
             progress: {
                 current: 7,
