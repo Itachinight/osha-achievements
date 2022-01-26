@@ -17,6 +17,7 @@ interface Props {
 
 enum ModalOpenCloseState {
     BeforeOpen,
+    NearOpen,
     AfterOpen,
     BeforeClose,
     NearClose,
@@ -34,7 +35,8 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
 
         raf(() => {
             ModalAnimation.animateOpen(ref.current!, rect, isSmallWidth(), () => {
-                setModalOpenCloseState(ModalOpenCloseState.AfterOpen);
+                setModalOpenCloseState(ModalOpenCloseState.NearOpen);
+                delay(() => setModalOpenCloseState(ModalOpenCloseState.AfterOpen));
             });
 
             document.body.classList.add('scroll-locked');
@@ -67,6 +69,10 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
 
     if (modalOpenCloseState === ModalOpenCloseState.BeforeOpen) {
         className.push('achievement-modal_opening');
+    }
+
+    if (modalOpenCloseState === ModalOpenCloseState.NearOpen) {
+        className.push('achievement-modal_near-opened');
     }
 
     if (modalOpenCloseState === ModalOpenCloseState.AfterOpen) {

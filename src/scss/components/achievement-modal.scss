@@ -7,6 +7,8 @@
     border-radius: 10px;
     background: white;
     box-shadow: var(--card-shadow);
+    //noinspection CssInvalidFunction
+    transform: translateZ(0);
     outline: none;
 
     &_opened {
@@ -24,7 +26,7 @@
         bottom: 0;
         right: 0;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 20;
+        z-index: 1000;
     }
 
     .perspective-card {
@@ -65,6 +67,8 @@
 
     .achievement__icon {
         margin-right: 0;
+        //noinspection CssInvalidFunction
+        transform: translateZ(0);
         will-change: width, height;
     }
 
@@ -78,12 +82,13 @@
         @extend %max-height-zero;
 
         display: block;
+        padding: 0 10px;
         line-height: 18px;
     }
 
     .achievement__progress {
         @media (max-width: breakpoints.$tablet) {
-            transition: opacity $duration * 0.3 linear $duration * 0.8;
+            transition: opacity 0.2s linear;
             opacity: 0;
         }
     }
@@ -94,10 +99,34 @@
         display: block;
     }
 
-    &_opening, &_opened {
+    &_opening {
+        @media (max-width: breakpoints.$tablet) {
+            .achievement__progress {
+                visibility: hidden;
+            }
+        }
+    }
+
+    &_near-opened {
+        @media (max-width: breakpoints.$tablet) {
+            .achievement__progress {
+                visibility: visible;
+            }
+        }
+    }
+
+    &_opened {
+        @media (max-width: breakpoints.$tablet) {
+            .achievement__progress {
+                opacity: 1;
+            }
+        }
+    }
+
+    &_opening, &_near-opened, &_opened {
         .achievement__icon {
-            width: 270px;
-            height: 270px;
+            width: 256px;
+            height: 256px;
 
             @media (max-width: breakpoints.$large-mobile) {
                 width: 200px;
@@ -124,7 +153,6 @@
         .achievement__progress {
             width: 80%;
             height: 11px;
-            opacity: 1;
         }
 
         .achievement__rarity {
@@ -141,19 +169,22 @@
             transition-delay: 0s !important;
             max-height: 0;
         }
+
+        .achievement__progress {
+            @media (max-width: breakpoints.$tablet) {
+                width: 80%;
+                height: 11px;
+                opacity: 0;
+            }
+        }
     }
 
     &_near-closed, &_closed {
-        .achievement__description {
-            display: none;
-        }
-
+        .achievement__description,
         .achievement__rarity {
             display: none;
         }
-    }
 
-    &_closing, &_near-closed, &_closed {
         .achievement__progress {
             @media (max-width: breakpoints.$tablet) {
                 display: none;
