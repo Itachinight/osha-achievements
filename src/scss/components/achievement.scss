@@ -220,11 +220,10 @@
 .achievement__progress {
     position: relative;
     height: 9px;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
 
     @media (max-width: breakpoints.$tablet) {
-        width: 90%;
         margin-top: 6px;
         grid-area: progress;
     }
@@ -285,17 +284,15 @@
 }
 
 .achievement__prize {
-    --height: 26px;
-    --width: 26px;
-
+    min-height: 27px;
+    max-height: 27px;
+    min-width: 27px;
+    max-width: 27px;
     margin-left: auto;
-    margin-right: 2px;
-    min-height: var(--height);
-    max-height: var(--height);
-    min-width: var(--width);
-    max-width: var(--width);
+    margin-right: 3px;
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 
     &_bronze {
         background-image: var(--bronze-trophy-url);
@@ -310,11 +307,11 @@
     }
 
     &_ruby {
-        --height: 27px;
-        --width: 18px;
-
-        margin-right: 5px;
         background-image: var(--ruby-trophy-url);
+    }
+
+    &_platinum {
+        background-image: var(--platinum-trophy-url);
     }
 }
 

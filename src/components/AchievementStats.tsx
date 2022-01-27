@@ -12,7 +12,24 @@ const AchievementStats: FC<Props> = ({stats}) => {
     return (
         <section className='achievement-stats'>
             <div className='achievement-stats__points'>
-                {stats.totalPoints} {translation.points}
+                <span>{stats.totalPoints} {translation.points}</span>
+                <div className='achievement-stats__points-help'>
+                    <p>
+                        <i className='achievement__prize achievement__prize_platinum'/> - 250 {translation.points}
+                    </p>
+                    <p>
+                        <i className='achievement__prize achievement__prize_ruby'/> - 30 {translation.points}
+                    </p>
+                    <p>
+                        <i className='achievement__prize achievement__prize_golden'/> - 30 {translation.points}
+                    </p>
+                    <p>
+                        <i className='achievement__prize achievement__prize_silver'/> - 20 {translation.points}
+                    </p>
+                    <p>
+                        <i className='achievement__prize achievement__prize_bronze'/> - 10 {translation.points}
+                    </p>
+                </div>
             </div>
             <div className='achievement-stats__trophies'>
                 <h4>{translation.receivedTrophies}</h4>

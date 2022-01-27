@@ -5,7 +5,7 @@ const AchievementDescription: FC = () => {
     const translation = useContext(TranslationContext);
 
     return (
-        <div className='achievement-page-description'>
+        <section className='achievement-page-description'>
             <div className='page-description'>
                 <h3 className='page-description__title'>
                     {translation.whatIsAchievements}
@@ -14,7 +14,7 @@ const AchievementDescription: FC = () => {
                     <p>{translation.whatIsAchievementsFull}</p>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

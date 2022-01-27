@@ -27,11 +27,14 @@
     }
 
     &__points {
+        position: relative;
         text-align: center;
         color: var(--blue);
         font-size: 52px;
         font-weight: 600;
         letter-spacing: 1px;
+        border-bottom: 3px dashed var(--blue);
+        cursor: help;
 
         @media (max-width: breakpoints.$tablet) {
             margin-bottom: 20px;
@@ -39,6 +42,56 @@
 
         @media (max-width: breakpoints.$large-mobile) {
             font-size: 40px;
+        }
+
+        &:hover .achievement-stats__points-help,
+        &:hover .achievement-stats__points-help:before {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+    }
+
+    &__points-help {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        padding: 10px 15px;
+        width: max-content;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+        transform-origin: top;
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+        font-size: 16px;
+        background-color: #fff;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
+        z-index: 30;
+
+        &:before {
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            opacity: 0;
+            transform-origin: bottom;
+            transition: 0.3s ease-in-out;
+            transform: translateX(-50%) scale(0);
+            content: '';
+            width: 0;
+            border-right: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+            filter: drop-shadow(0 -6px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        > p {
+            @include mixins.flex-center;
+            justify-content: flex-start;
+
+            margin: 6px auto;
+
+            .achievement__prize {
+                margin-left: 0;
+            }
         }
     }
 }

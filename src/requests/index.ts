@@ -51,7 +51,7 @@ export async function getAchievementData(userId: number): Promise<AchievementGro
             description: 'Повторно зачислиться в нашу школу после отчисления.',
             isCompleted: false,
             isUnread: false,
-            date: '21.12.21 12:21',
+            date: null,
             progress: {
                 current: 8,
                 max: 10
