@@ -56,14 +56,14 @@ export class ModalAnimation {
     private static getOpenState(isMobile: boolean): ModalAnimationState {
         return isMobile ? {
             width: '90%',
-            height: '450px',
-            top: 'calc(50% - 225px)',
+            height: '480px',
+            top: 'calc(50% - 240px)',
             left: '5%',
             opacity: 1,
         } : {
             width: '500px',
-            height: '450px',
-            top: 'calc(50% - 225px)',
+            height: '480px',
+            top: 'calc(50% - 240px)',
             left: 'calc(50% - 250px)',
             opacity: 1,
         };

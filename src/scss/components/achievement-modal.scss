@@ -143,10 +143,10 @@
         }
 
         .achievement__description {
-            max-height: 65px;
+            max-height: 90px;
 
             @media (max-width: breakpoints.$small-mobile) {
-                max-height: 82px;
+                max-height: 126px;
             }
         }
 
