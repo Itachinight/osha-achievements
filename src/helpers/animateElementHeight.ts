@@ -13,7 +13,7 @@ export function animateElementHeight(element: HTMLElement, start: number, end: n
                 {height: `${start}px`},
                 {height: `${end}px`}
             ],
-            {duration, easing: 'linear'}
+            {duration, easing: 'ease-in-out'}
         ).addEventListener('finish', onFinish);
     } else {
         fallbackAnimation(element, start, end, onFinish);
