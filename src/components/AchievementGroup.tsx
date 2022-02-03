@@ -75,12 +75,14 @@ const AchievementGroup: FC<Props> = ({group}) => {
         <section className='achievement-group'>
             <details ref={detailsRef} className={detailsClass.join(' ')} open={isOpen} style={style}>
                 <summary ref={summaryRef} onClick={preventDefault}>
-                    <div className='achievement-group__header'>
-                        <h3 className='achievement-group__title' onClick={handleClick}>
-                            {group.title}
-                        </h3>
-                        <AchievementGroupProgress progress={group.progress}/>
-                    </div>
+                    {group.title !== '' &&
+                        <div className='achievement-group__header'>
+                            <h3 className='achievement-group__title' onClick={handleClick}>
+                                {group.title}
+                            </h3>
+                            {group.progress != null && <AchievementGroupProgress progress={group.progress}/>}
+                        </div>
+                    }
                     <hr className='achievement-group__line'/>
                 </summary>
                 <AchievementsGrid ref={containerRef} achievements={group.achievements}/>
