@@ -21,30 +21,30 @@ const AchievementRarity: FC<Props> = ({rarity, rarityLevel}) => {
     }
 
     let rarityLevelText: string;
-    let rarityLevelClass: string;
+    const rarityLevelClass = ['achievement__rarity-level'];
 
     switch (rarityLevel) {
         case AchievementRarityLevel.COMMON:
             rarityLevelText = translation.common;
-            rarityLevelClass = 'achievement__rarity-level_common';
+            rarityLevelClass.push('achievement__rarity-level_common');
             break;
         case AchievementRarityLevel.RARE:
             rarityLevelText = translation.rare;
-            rarityLevelClass = 'achievement__rarity-level_rare';
+            rarityLevelClass.push('achievement__rarity-level_rare');
             break;
         case AchievementRarityLevel.VERY_RARE:
             rarityLevelText = translation.veryRare;
-            rarityLevelClass = 'achievement__rarity-level_very-rare';
+            rarityLevelClass.push('achievement__rarity-level_very-rare');
             break;
         case AchievementRarityLevel.LEGENDARY:
             rarityLevelText = translation.legendary;
-            rarityLevelClass = 'achievement__rarity-level_legendary';
+            rarityLevelClass.push('achievement__rarity-level_legendary');
             break;
     }
 
     return (
         <div className='achievement__rarity'>
-            <p className={`achievement__rarity-level ${rarityLevelClass}`}>
+            <p className={rarityLevelClass.join(' ')}>
                 {rarityLevelText} {translation.achievement}
             </p>
             <p className='achievement__rarity-text'>
