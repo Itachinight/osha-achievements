@@ -8,6 +8,13 @@ export enum AchievementCost {
     PLATINUM
 }
 
+export enum AchievementRarityLevel {
+    COMMON,
+    RARE,
+    VERY_RARE,
+    LEGENDARY,
+}
+
 interface Progress {
     current: number
     max: number
@@ -24,6 +31,7 @@ export interface AchievementWithUserData {
     progress?: Progress
     date?: string | null
     rarity: number
+    rarityLevel: AchievementRarityLevel
 }
 
 export interface AchievementGroup {
@@ -32,6 +40,13 @@ export interface AchievementGroup {
     isCompleteAnnounced: boolean
     progress: Progress
     achievements: AchievementWithUserData[]
+}
+
+export interface AchievementResponseData {
+    groups: AchievementGroup[]
+    uncategorized: AchievementGroup
+    platinum: AchievementWithUserData
+    elapsed: string
 }
 
 export type NoneToVoidFunc = () => void;
