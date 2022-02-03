@@ -1,6 +1,7 @@
 import {Lang} from '../types';
 
 export const ruTranslation = {
+    goToRating: 'Перейти в рейтинг',
     points: 'очков',
     receivedTrophies: 'Полученные награды',
     whatIsAchievements: 'Что такое достижения (ачивки) ?',
@@ -8,6 +9,7 @@ export const ruTranslation = {
 };
 
 export const uaTranslation = {
+    goToRating: 'Перейти до рейтингу',
     points: 'балів',
     receivedTrophies: 'Отримані нагороди',
     whatIsAchievements: 'Що таке досягнення (ачівки) ?',

@@ -1,0 +1,30 @@
+@use '../abstracts/breakpoints';
+
+.achievement-rating-link {
+    margin: 30px auto;
+    text-align: center;
+
+    @media (max-width: breakpoints.$medium) {
+        margin: 25px auto;
+    }
+
+    > a {
+        height: 24px;
+
+        > span {
+            display: inline-flex;
+            align-items: center;
+
+            svg {
+                pointer-events: none;
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                margin-left: 2px;
+                margin-bottom: 2px;
+                fill: var(--blue);
+            }
+        }
+    }
+}
+
