@@ -1,27 +1,43 @@
-import React, {FC, memo} from "react";
+import React, {FC, memo, useContext} from "react";
 import {AchievementRarityLevel, AchievementWithUserData} from "../types";
+import TranslationContext from "./contexts/TranslationContext";
 
 type Props = Pick<AchievementWithUserData, 'rarity' | 'rarityLevel'>;
 
 const AchievementRarity: FC<Props> = ({rarity, rarityLevel}) => {
+    const translation = useContext(TranslationContext);
+
+    if (rarity === 0) {
+        return (
+            <div className='achievement__rarity'>
+                <p className='achievement__rarity-level achievement__rarity-level_not-received'>
+                    {translation.wasNotReceivedByAnybodyStart}
+                </p>
+                <p className='achievement__rarity-text'>
+                    {translation.wasNotReceivedByAnybodyEnd}
+                </p>
+            </div>
+        );
+    }
+
     let rarityLevelText: string;
     let rarityLevelClass: string;
 
     switch (rarityLevel) {
         case AchievementRarityLevel.COMMON:
-            rarityLevelText = 'Обычное';
+            rarityLevelText = translation.common;
             rarityLevelClass = 'achievement__rarity-level_common';
             break;
         case AchievementRarityLevel.RARE:
-            rarityLevelText = 'Редкое';
+            rarityLevelText = translation.rare;
             rarityLevelClass = 'achievement__rarity-level_rare';
             break;
         case AchievementRarityLevel.VERY_RARE:
-            rarityLevelText = 'Очень редкое';
+            rarityLevelText = translation.veryRare;
             rarityLevelClass = 'achievement__rarity-level_very-rare';
             break;
         case AchievementRarityLevel.LEGENDARY:
-            rarityLevelText = 'Легендарное';
+            rarityLevelText = translation.legendary;
             rarityLevelClass = 'achievement__rarity-level_legendary';
             break;
     }
@@ -29,10 +45,10 @@ const AchievementRarity: FC<Props> = ({rarity, rarityLevel}) => {
     return (
         <div className='achievement__rarity'>
             <p className={`achievement__rarity-level ${rarityLevelClass}`}>
-                {rarityLevelText} достижение
+                {rarityLevelText} {translation.achievement}
             </p>
             <p className='achievement__rarity-text'>
-                Его получили {rarity}% пользователей
+                {translation.wasReceived} {rarity}% {translation.users}
             </p>
         </div>
     );

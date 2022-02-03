@@ -158,8 +158,8 @@
         .achievement__rarity {
             max-height: 36px;
 
-            @media (max-width: breakpoints.$small-mobile) {
-                max-height: 56px;
+            @media (max-width: breakpoints.$tablet) {
+                max-height: 52px;
             }
         }
     }

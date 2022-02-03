@@ -3,13 +3,9 @@
 
 .perspective-card {
     width: calc(20% - 20px);
-    margin: 0 10px 10px;
+    margin: 0 10px 15px;
     perspective: 900px;
     cursor: pointer;
-
-    &:last-of-type {
-        margin-bottom: 0;
-    }
 
     @media (max-width: breakpoints.$large) {
         width: calc(25% - 20px);
@@ -24,6 +20,10 @@
     @media (max-width: breakpoints.$tablet) {
         width: 100%;
         perspective: none;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -296,6 +296,10 @@
 
         &_legendary {
             color: var(--golden);
+        }
+
+        &_not-received {
+            color: #ff3333;
         }
     }
 
