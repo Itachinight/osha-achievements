@@ -1,6 +1,6 @@
-import {AchievementCost, AchievementGroup, AchievementStats} from '../types';
+import {AchievementCost, AchievementResponseData, AchievementStats, AchievementWithUserData} from '../types';
 
-export function makeAchievementStats(groups: AchievementGroup[]): Readonly<AchievementStats> {
+export function makeAchievementStats(data: AchievementResponseData): Readonly<AchievementStats> {
     const stats: AchievementStats = {
         bronze: 0,
         silver: 0,
@@ -15,42 +15,46 @@ export function makeAchievementStats(groups: AchievementGroup[]): Readonly<Achie
         }
     };
 
-    for (const group of groups) {
+    const processAchievement = (achievement: AchievementWithUserData) => {
+        stats.progress.max++;
+
+        if (achievement.isCompleted) {
+            stats.progress.current++;
+
+            switch (achievement.cost) {
+                case AchievementCost.BRONZE:
+                    stats.bronze++;
+                    stats.totalPoints += 10;
+                    break;
+                case AchievementCost.SILVER:
+                    stats.silver++;
+                    stats.totalPoints += 20;
+                    break;
+                case AchievementCost.GOLDEN:
+                    stats.golden++;
+                    stats.totalPoints += 30;
+                    break;
+                case AchievementCost.RUBY:
+                    stats.ruby++;
+                    stats.totalPoints += 30;
+                    break;
+                case AchievementCost.PLATINUM:
+                    stats.platinum++;
+                    stats.totalPoints += 250;
+                    break;
+            }
+        }
+    };
+
+    for (const group of data.groups) {
         if (group.progress.current === group.progress.max) {
             stats.groupsCompleted++;
         }
 
-        for (const achievement of group.achievements) {
-            stats.progress.max++;
-
-            if (achievement.isCompleted) {
-                stats.progress.current++;
-
-                switch (achievement.cost) {
-                    case AchievementCost.BRONZE:
-                        stats.bronze++;
-                        stats.totalPoints += 10;
-                        break;
-                    case AchievementCost.SILVER:
-                        stats.silver++;
-                        stats.totalPoints += 20;
-                        break;
-                    case AchievementCost.GOLDEN:
-                        stats.golden++;
-                        stats.totalPoints += 30;
-                        break;
-                    case AchievementCost.RUBY:
-                        stats.ruby++;
-                        stats.totalPoints += 30;
-                        break;
-                    case AchievementCost.PLATINUM:
-                        stats.platinum++;
-                        stats.totalPoints += 250;
-                        break;
-                }
-            }
-        }
+        group.achievements.forEach(processAchievement);
     }
+
+    [...data.uncategorized.achievements, data.platinum, data.lengthOfService].forEach(processAchievement);
 
     return Object.freeze(stats);
 }
