@@ -40,7 +40,9 @@ const AchievementGroup: FC<Props> = ({group}) => {
             });
 
             raf(() => {
-                const endHeight = summary.offsetHeight + container.offsetHeight;
+                const containerMarginTop = window.parseInt(window.getComputedStyle(container).marginTop);
+
+                const endHeight = summary.offsetHeight + container.offsetHeight + containerMarginTop;
 
                 setIsAnimationPlaying(true);
 
@@ -69,20 +71,18 @@ const AchievementGroup: FC<Props> = ({group}) => {
         detailsClass.push('achievement-group__spoiler_overflow-hidden');
     }
 
-    const style = fixedHeight !== null ? {height: fixedHeight} : undefined;
+    const style = fixedHeight !== null ? {maxHeight: fixedHeight} : undefined;
 
     return (
         <section className='achievement-group'>
             <details ref={detailsRef} className={detailsClass.join(' ')} open={isOpen} style={style}>
                 <summary ref={summaryRef} onClick={preventDefault}>
-                    {group.title !== '' &&
-                        <div className='achievement-group__header'>
-                            <h3 className='achievement-group__title' onClick={handleClick}>
-                                {group.title}
-                            </h3>
-                            {group.progress != null && <AchievementGroupProgress progress={group.progress}/>}
-                        </div>
-                    }
+                    <div className='achievement-group__header'>
+                        <h3 className='achievement-group__title' onClick={handleClick}>
+                            {group.title}
+                        </h3>
+                        {group.progress != null && <AchievementGroupProgress progress={group.progress}/>}
+                    </div>
                     <hr className='achievement-group__line'/>
                 </summary>
                 <AchievementsGrid ref={containerRef} achievements={group.achievements}/>

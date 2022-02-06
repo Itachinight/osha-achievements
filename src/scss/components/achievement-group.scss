@@ -9,6 +9,12 @@
     }
 
     &__spoiler {
+        //noinspection CssInvalidFunction
+        transform: translateZ(0);
+        transition-timing-function: linear;
+        transition-property: max-height;
+        will-change: max-height;
+
         &_overflow-hidden {
             overflow-y: hidden;
         }
@@ -138,10 +144,10 @@
 .achievements-grid {
     @include mixins.flex-center;
 
-    margin: 30px auto;
+    margin-top: 30px;
     flex-wrap: wrap;
 
     @media (max-width: breakpoints.$medium) {
-        margin: 25px auto;
+        margin-top: 25px;
     }
 }

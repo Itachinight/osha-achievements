@@ -115,6 +115,10 @@
             @media (max-width: breakpoints.$large-mobile) {
                 animation-duration: 4s;
             }
+
+            .achievement-group__spoiler_overflow-hidden & {
+                animation: none;
+            }
         }
     }
 

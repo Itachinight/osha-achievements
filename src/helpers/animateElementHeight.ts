@@ -1,48 +1,41 @@
 import {PREFERS_REDUCE_MOTION} from '../env';
 import {NoneToVoidFunc} from '../types';
 import {raf} from './raf';
-import {GROUP_SPOILER_ANIMATION_DURATION} from "../config";
-import {supportsAnimate} from "./supportsAnimate";
+import {SPOILER_ANIMATION_MIN_DURATION, SPOILER_ANIMATION_MAX_DURATION} from '../config';
 
-const duration = PREFERS_REDUCE_MOTION ? 0 : GROUP_SPOILER_ANIMATION_DURATION;
+const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
-export function animateElementHeight(element: HTMLElement, start: number, end: number, onFinish: NoneToVoidFunc): void {
-    if (supportsAnimate(element)) {
-        element.animate(
-            [
-                {height: `${start}px`},
-                {height: `${end}px`}
-            ],
-            {duration, easing: 'ease-in-out'}
-        ).addEventListener('finish', onFinish);
-    } else {
-        fallbackAnimation(element, start, end, onFinish);
+function getDuration(start: number, end: number): number {
+    if (PREFERS_REDUCE_MOTION) {
+        return 0;
     }
+
+    // assume height === speed of animation
+    const speed = Math.max(start, end);
+
+    return clamp(speed, SPOILER_ANIMATION_MIN_DURATION, SPOILER_ANIMATION_MAX_DURATION);
 }
 
-function fallbackAnimation(elem: HTMLElement, start: number, end: number, onFinish: NoneToVoidFunc): void {
-    elem.style.transitionProperty = 'all';
-    elem.style.transitionDuration = `${duration}ms`;
-    elem.style.transitionTimingFunction = 'linear';
+export function animateElementHeight(element: HTMLElement, start: number, end: number, onFinish: NoneToVoidFunc): void {
+    const duration = getDuration(start, end);
 
-    elem.style.height = `${start}px`;
+    element.style.transitionDuration = `${duration}ms`;
+    element.style.maxHeight = `${start}px`;
 
-    raf(() => elem.style.height = `${end}px`);
+    raf(() => element.style.maxHeight = `${end}px`);
 
     const handleTransitionEnd = (e: TransitionEvent) => {
-        if (e.target !== elem || e.propertyName !== 'height') {
+        if (e.target !== element || e.propertyName !== 'max-height') {
             return;
         }
 
         onFinish();
 
-        elem.style.transitionProperty = '';
-        elem.style.transitionDuration = '';
-        elem.style.transitionTimingFunction = '';
-        elem.style.height = '';
+        element.style.transitionDuration = '';
+        element.style.maxHeight = '';
 
-        elem.removeEventListener('transitionend', handleTransitionEnd);
+        element.removeEventListener('transitionend', handleTransitionEnd);
     }
 
-    elem.addEventListener('transitionend', handleTransitionEnd);
+    element.addEventListener('transitionend', handleTransitionEnd);
 }
