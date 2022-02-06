@@ -23,9 +23,11 @@ interface Progress {
 export interface AchievementWithUserData {
     id: number
     cost: AchievementCost
-    icon: string
+    iconPng: string
+    iconWebp: string
     title: string
     description: string
+    isSecret: boolean
     isCompleted: boolean
     isUnread: boolean
     progress?: Progress
@@ -46,6 +48,7 @@ export interface AchievementResponseData {
     groups: AchievementGroup[]
     uncategorized: AchievementGroup
     platinum: AchievementWithUserData
+    lengthOfService: AchievementWithUserData
     elapsed: string
 }
 

@@ -25,6 +25,15 @@
             margin-bottom: 0;
         }
     }
+
+    .achievement-group_no-card & {
+        width: calc(50% - 20px);
+        perspective: none;
+
+        @media (max-width: breakpoints.$tablet) {
+            width: 100%;
+        }
+    }
 }
 
 .achievement {
@@ -57,6 +66,10 @@
             }
         }
     }
+
+    &_no-card {
+        transform: none !important;
+    }
 }
 
 .achievement__front-face {
@@ -74,7 +87,6 @@
     .achievement_highlight & {
         position: relative;
         overflow: hidden;
-        //box-shadow: 0 0 7px 1px rgba(255, 190, 0, 0.6), 0 0 12px 4px rgba(255, 190, 0, 0.3);
 
         &::after {
             content: "";
@@ -95,7 +107,21 @@
             z-index: 10;
             filter: blur(4px);
             animation: moving-flare 3s ease-in-out 3s infinite;
+
+            @media (max-width: breakpoints.$tablet) {
+                animation-duration: 5s;
+            }
+
+            @media (max-width: breakpoints.$large-mobile) {
+                animation-duration: 4s;
+            }
         }
+    }
+
+    .achievement_no-card & {
+        padding: 12px;
+        min-height: unset;
+        max-height: unset;
     }
 
     @media (max-width: breakpoints.$tablet) {
@@ -127,6 +153,10 @@
     transform: rotateY(180deg);
     backface-visibility: hidden;
 
+    .achievement_no-card & {
+        display: none;
+    }
+
     @media (max-width: breakpoints.$tablet) {
         display: none;
     }
@@ -140,6 +170,21 @@
     flex-grow: 1;
     width: 100%;
 
+    .achievement_no-card & {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-areas:
+        "icon title title title"
+        "icon description description description"
+        "icon description description description"
+        "icon progress progress progress";
+
+        > picture {
+            grid-area: icon;
+        }
+    }
+
     @media (max-width: breakpoints.$tablet) {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
@@ -149,6 +194,10 @@
         "icon description description description"
         "icon description description description"
         "icon progress progress progress";
+
+        > picture {
+            grid-area: icon;
+        }
     }
 }
 
@@ -159,8 +208,15 @@
     border-radius: 6px;
     transition: all 500ms linear;
 
-    .achievement_greyscale & {
-        filter: grayscale(1) opacity(0.8);
+    .achievement_greyscale:not(.achievement_secret) & {
+        filter: brightness(0) invert(0.315);
+    }
+
+    .achievement_no-card & {
+        grid-area: icon;
+        width: 100px;
+        height: 100px;
+        margin-right: 5px;
     }
 
     @media (max-width: breakpoints.$tablet) {
@@ -190,6 +246,17 @@
         filter: grayscale(1);
     }
 
+    .achievement_no-card & {
+        margin-top: 0;
+        grid-area: title;
+        font-size: 20px;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+    }
+
     @media (max-width: breakpoints.$tablet) {
         margin-top: 0;
         grid-area: title;
@@ -205,6 +272,20 @@
 .achievement__description {
     display: none;
     text-align: center;
+
+    .achievement_no-card & {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        grid-area: description;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+
+        @media (max-width: breakpoints.$large-mobile) {
+            font-size: 14px;
+        }
+    }
 
     @media (max-width: breakpoints.$tablet) {
         display: -webkit-box;
@@ -226,6 +307,11 @@
     height: 9px;
     width: 90%;
     margin: 0 auto;
+
+    .achievement_no-card & {
+        margin-top: 6px;
+        grid-area: progress;
+    }
 
     @media (max-width: breakpoints.$tablet) {
         margin-top: 6px;
@@ -317,6 +403,11 @@
     width: 100%;
     padding-top: 8px;
     border-top: 1px solid rgba(0, 109, 206, 0.15);
+
+    .achievement_no-card & {
+        margin-top: 6px;
+        grid-area: footer;
+    }
 
     @media (max-width: breakpoints.$tablet) {
         margin-top: 6px;

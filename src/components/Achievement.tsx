@@ -9,10 +9,11 @@ import AchievementRarity from "./AchievementRarity";
 interface Props {
     achievement: AchievementWithUserData
     bothFaces?: boolean
+    noCard?: boolean
     onClick?: (achievement: AchievementWithUserData, rect: DOMRect) => void
 }
 
-const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
+const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick, noCard = false}) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [isClicked, setIsClicked] = useState(false);
     
@@ -23,6 +24,14 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
     };
 
     const achievementClassName = ['achievement'];
+
+    if (noCard) {
+        achievementClassName.push('achievement_no-card');
+    }
+
+    if (achievement.isSecret) {
+        achievementClassName.push('achievement_secret');
+    }
 
     if (!achievement.isCompleted) {
         achievementClassName.push('achievement_greyscale');
@@ -41,7 +50,10 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick}) => {
             <div className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
-                        <img className='achievement__icon' src={achievement.icon} alt={achievement.title} loading='lazy'/>
+                        <picture>
+                            <source srcSet={achievement.iconWebp} type='image/webp'/>
+                            <img className='achievement__icon' src={achievement.iconPng} alt={achievement.title}/>
+                        </picture>
                         <h3 className='achievement__title'>
                             {achievement.title}
                         </h3>
