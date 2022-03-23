@@ -1,8 +1,8 @@
-import React, {FC, memo, useContext} from "react";
-import TranslationContext from "./contexts/TranslationContext";
+import React, {FC, memo} from "react";
+import {useTranslationContext} from "../../hooks/useTranslationContext";
 
 const AchievementDescription: FC = () => {
-    const translation = useContext(TranslationContext);
+    const translation = useTranslationContext();
 
     return (
         <section className='achievement-page-description'>

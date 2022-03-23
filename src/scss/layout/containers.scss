@@ -1,6 +1,7 @@
 @use '../abstracts/breakpoints';
 
-body.scroll-locked {
+html.scroll-locked body {
+    margin: 0;
     overflow: hidden;
 
     #root {

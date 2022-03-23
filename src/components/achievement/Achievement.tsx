@@ -1,27 +1,42 @@
 import React, {FC, memo, useRef, useState} from 'react';
-import {AchievementWithUserData} from '../types';
-import {getAchievementPrizeClassName} from "../helpers/getAchievementPrizeClassName";
+import {AchievementWithUserData} from '../../types';
+import {getAchievementPrizeClassName} from "../../helpers/getAchievementPrizeClassName";
 import AchievementProgress from "./AchievementProgress";
 import AchievementDate from "./AchievementDate";
-import {delay} from "../helpers/delay";
-import AchievementRarity from "./AchievementRarity";
+import {delay} from "../../helpers/delay";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {openModal} from "../../redux/slices/detailedAchievementModalSlice";
+import AchievementPicture from "./AchievementPicture";
+import {readAchievement} from "../../redux/slices/achievementsSlice";
+import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
 
 interface Props {
     achievement: AchievementWithUserData
-    bothFaces?: boolean
     noCard?: boolean
-    onClick?: (achievement: AchievementWithUserData, rect: DOMRect) => void
 }
 
-const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick, noCard = false}) => {
+const Achievement: FC<Props> = ({achievement, noCard = false}) => {
+    const dispatch = useAppDispatch();
+
     const ref = useRef<HTMLDivElement | null>(null);
     const [isClicked, setIsClicked] = useState(false);
-    
+
     const handleClick = () => {
         setIsClicked(true);
-        delay(() => setIsClicked(false), 500);
-        onClick?.(achievement, ref.current!.getBoundingClientRect());
+        delay(() => setIsClicked(false), 250);
+
+        const rect = ref.current!.getBoundingClientRect();
+
+        delay(() => dispatch(openModal({activeAchievement: achievement, rect})), noCard ? 0 : ACHIEVEMENT_CLICK_DELAY);
     };
+
+    const handleHover = () => {
+        if (!achievement.isUnread) {
+            return;
+        }
+
+        delay(() => dispatch(readAchievement(achievement)), 400);
+    }
 
     const achievementClassName = ['achievement'];
 
@@ -45,34 +60,32 @@ const Achievement: FC<Props> = ({achievement, bothFaces = true, onClick, noCard 
         achievementClassName.push('achievement_clicked');
     }
 
+    const trophyClassName = ['achievement__prize', getAchievementPrizeClassName(achievement)];
+
     return (
-        <div ref={ref} className='perspective-card'>
+        <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
             <div className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
-                        <picture>
-                            <source srcSet={achievement.iconWebp} type='image/webp'/>
-                            <img className='achievement__icon' src={achievement.iconPng} alt={achievement.title}/>
-                        </picture>
+                        <AchievementPicture
+                            title={achievement.title}
+                            iconPng={achievement.iconPng}
+                            iconWebp={achievement.iconWebp}
+                        />
                         <h3 className='achievement__title'>
                             {achievement.title}
                         </h3>
+                        {achievement.progress != null && <AchievementProgress progress={achievement.progress}/>}
                         <div className='achievement__description'>
                             {achievement.description}
                         </div>
-                        {achievement.progress != null && <AchievementProgress progress={achievement.progress}/>}
-                        <AchievementRarity rarity={achievement.rarity} rarityLevel={achievement.rarityLevel}/>
                     </div>
                     <div className='achievement__footer'>
                         {achievement.date != null && <AchievementDate date={achievement.date}/>}
-                        <i className={['achievement__prize', getAchievementPrizeClassName(achievement)].join(' ')}/>
+                        <i className={trophyClassName.join(' ')}/>
                     </div>
                 </div>
-                {bothFaces &&
-                    <div className='achievement__back-face'>
-                        {achievement.description}
-                    </div>
-                }
+                {!noCard && <div className='achievement__back-face'>{achievement.description}</div>}
             </div>
         </div>
     );

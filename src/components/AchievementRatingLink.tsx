@@ -1,9 +1,10 @@
-import React, {FC, memo, useContext} from 'react';
-import TranslationContext from "./contexts/TranslationContext";
+import React, {FC, memo} from 'react';
+import {useTranslationContext} from "../hooks/useTranslationContext";
 
 const AchievementRatingLink: FC = () => {
-    const translation = useContext(TranslationContext);
+    const translation = useTranslationContext();
 
+    // noinspection HtmlUnknownTarget
     return (
         <section className='achievement-rating-link'>
             <a href='/achievement_rating' className="btn btn--large btn--underline" target='_blank' rel='noreferrer noopener'>

@@ -75,7 +75,7 @@ export class ModalAnimation {
             height: `${rect.height}px`,
             top: `${rect.top}px`,
             left: `${rect.left}px`,
-            opacity: 0.25,
+            opacity: 0.1,
         };
     }
 

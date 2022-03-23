@@ -1,15 +1,10 @@
 import {useScrollbarWidth} from 'react-use';
-import {useEffect} from 'react';
+import {useLayoutEffect} from 'react';
 
-const SCROLLBAR_WIDTH_PROPERTY_NAME = '--scrollbar-width';
-
-export function useScrollbarWidthCustomProperty(): void {
+export function useScrollbarWidthCustomProperty(propertyName: string): void {
     const scrollbarWidth = useScrollbarWidth();
 
-    useEffect(() => {
-        document.documentElement.style.setProperty(
-            SCROLLBAR_WIDTH_PROPERTY_NAME,
-            scrollbarWidth != null ? `${scrollbarWidth}px` : '0'
-        );
-    }, [scrollbarWidth]);
+    useLayoutEffect(() => {
+        document.documentElement.style.setProperty(propertyName, scrollbarWidth != null ? `${scrollbarWidth}px` : '0');
+    }, [propertyName, scrollbarWidth]);
 }

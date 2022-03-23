@@ -4,15 +4,19 @@
 .achievement-stats {
     @include mixins.flex-center;
 
-    justify-content: space-evenly;
     margin: 30px auto 50px;
 
     @media (max-width: breakpoints.$tablet) {
         flex-direction: column;
-        justify-content: center;
     }
 
     &__trophies {
+        width: 50%;
+
+        @media (max-width: breakpoints.$tablet) {
+            width: 100%;
+        }
+
         > h4 {
             margin: 0 auto 15px;
             text-align: center;
@@ -28,26 +32,32 @@
 
     &__points {
         position: relative;
+        width: 50%;
         text-align: center;
         color: var(--blue);
-        font-size: 52px;
         font-weight: 600;
-        letter-spacing: 1px;
-        border-bottom: 3px dashed var(--blue);
-        cursor: help;
 
         @media (max-width: breakpoints.$tablet) {
+            width: 100%;
             margin-bottom: 20px;
         }
 
-        @media (max-width: breakpoints.$large-mobile) {
-            font-size: 40px;
-        }
+        > span {
+            font-size: 52px;
+            letter-spacing: 1px;
+            border-bottom: 3px dashed var(--blue);
+            cursor: help;
 
-        &:hover .achievement-stats__points-help,
-        &:hover .achievement-stats__points-help:before {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
+            @media (max-width: breakpoints.$large-mobile) {
+                font-size: 40px;
+                letter-spacing: 0.5px;
+            }
+
+            &:hover ~ .achievement-stats__points-help,
+            &:hover ~ .achievement-stats__points-help:before {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
         }
     }
 
@@ -107,7 +117,7 @@
     }
 
     &__image {
-        --size: 51px;
+        --size: 52px;
 
         position: relative;
         display: block;
@@ -120,11 +130,11 @@
         background-position: center;
 
         @media (max-width: breakpoints.$large-mobile) {
-            --size: 45px;
+            --size: 46px;
         }
 
         @media (max-width: breakpoints.$small-mobile) {
-            --size: 40px;
+            --size: 42px;
         }
 
         &_bronze {
@@ -139,33 +149,11 @@
             --img: var(--golden-trophy-url);
         }
 
-        @mixin narrow-trophy {
-            --height: 51px;
-            --width: 34px;
-
-            height: var(--height);
-            width: var(--width);
-
-            @media (max-width: breakpoints.$large-mobile) {
-                --height: 45px;
-                --width: 30px;
-            }
-
-            @media (max-width: breakpoints.$small-mobile) {
-                --height: 42px;
-                --width: 28px;
-            }
-        }
-
         &_ruby {
-            @include narrow-trophy;
-
             --img: var(--ruby-trophy-url);
         }
 
         &_platinum {
-            @include narrow-trophy;
-
             --img: var(--platinum-trophy-url);
         }
     }

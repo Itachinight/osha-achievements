@@ -15,7 +15,7 @@ export function makeAchievementStats(data: AchievementResponseData): Readonly<Ac
         }
     };
 
-    const processAchievement = (achievement: AchievementWithUserData) => {
+    const processAchievement = (achievement: AchievementWithUserData): void => {
         stats.progress.max++;
 
         if (achievement.isCompleted) {
@@ -47,14 +47,19 @@ export function makeAchievementStats(data: AchievementResponseData): Readonly<Ac
     };
 
     for (const group of data.groups) {
-        if (group.progress.current === group.progress.max) {
+        if (group.progress != null && group.progress.current === group.progress.max) {
             stats.groupsCompleted++;
         }
 
         group.achievements.forEach(processAchievement);
     }
 
-    [...data.uncategorized.achievements, data.platinum, data.lengthOfService].forEach(processAchievement);
+    data.uncategorized.achievements.forEach(processAchievement);
+    processAchievement(data.platinum);
 
-    return Object.freeze(stats);
+    if (data.lengthOfService != null) {
+        processAchievement(data.lengthOfService);
+    }
+
+    return stats;
 }

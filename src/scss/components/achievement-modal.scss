@@ -1,8 +1,8 @@
 @use '../abstracts/breakpoints';
+@use '../abstracts/mixins';
 
 .achievement-modal {
-    $duration: 600ms;
-
+    $duration: 700ms;
     position: absolute;
     border-radius: 10px;
     background: white;
@@ -11,14 +11,6 @@
     transform: translateZ(0);
     outline: none;
 
-    &_opened {
-
-    }
-
-    &_closing {
-
-    }
-
     &__overlay {
         position: fixed;
         top: 0;
@@ -26,91 +18,76 @@
         bottom: 0;
         right: 0;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+        z-index: 1050;
     }
 
-    .perspective-card {
+    .achievement {
         width: 100%;
         height: 100%;
-        margin: 0;
-        perspective: none;
-        cursor: default;
-    }
-
-    .perspective-card .achievement {
-        height: 100%;
         will-change: unset;
-    }
 
-    .perspective-card:hover .achievement {
-        transform: none;
-    }
+        &__front-face {
+            justify-content: center;
 
-    .achievement__front-face {
-        height: 100%;
-        min-height: unset;
-        max-height: unset;
-        justify-content: center;
-    }
-
-    .achievement__front-face::after {
-        content: none;
-    }
-
-    .achievement__body {
-        display: flex;
-    }
-
-    .achievement__body > * {
-        transition: all ease-in-out $duration;
-    }
-
-    .achievement__icon {
-        margin-right: 0;
-        //noinspection CssInvalidFunction
-        transform: translateZ(0);
-        will-change: width, height;
-    }
-
-    %max-height-zero {
-        max-height: 0;
-        overflow: hidden;
-        transition: all ease-in-out $duration, max-height $duration * 0.65 ease-in-out $duration * 0.35;
-    }
-
-    .achievement__description {
-        @extend %max-height-zero;
-
-        display: block;
-        padding: 0 10px;
-        line-height: 18px;
-    }
-
-    .achievement__progress {
-        @media (max-width: breakpoints.$tablet) {
-            transition: opacity 0.2s linear;
-            opacity: 0;
+            &::after {
+                content: none;
+            }
         }
-    }
 
-    .achievement__rarity {
-        @extend %max-height-zero;
+        &__body {
+            display: flex;
+        }
 
-        display: block;
+        &__icon {
+            margin-right: 0;
+            //noinspection CssInvalidFunction
+            transform: translateZ(0);
+            will-change: width, height;
+            @include mixins.all-ease-in-out-transition($duration);
+        }
+
+        &__title {
+            @include mixins.all-ease-in-out-transition($duration);
+        }
+
+
+        &__description {
+            @include mixins.max-height-zero($duration);
+
+            display: block;
+            padding: 0 10px;
+            line-height: 18px;
+        }
+
+        &__progress {
+            @include mixins.all-ease-in-out-transition($duration);
+
+            @media (max-width: breakpoints.$tablet) {
+                opacity: 0;
+                transition: opacity 0.2s linear;
+            }
+        }
+
+        &__rarity {
+            @include mixins.max-height-zero($duration);
+
+            display: block;
+        }
+
     }
 
     &_opening {
         @media (max-width: breakpoints.$tablet) {
-            .achievement__progress {
-                visibility: hidden;
+            .achievement__progress > progress {
+                display: none;
             }
         }
     }
 
     &_near-opened {
         @media (max-width: breakpoints.$tablet) {
-            .achievement__progress {
-                visibility: visible;
+            .achievement__progress > progress {
+                display: block;
             }
         }
     }

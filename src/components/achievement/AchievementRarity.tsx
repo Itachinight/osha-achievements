@@ -1,11 +1,11 @@
-import React, {FC, memo, useContext} from "react";
-import {AchievementRarityLevel, AchievementWithUserData} from "../types";
-import TranslationContext from "./contexts/TranslationContext";
+import React, {FC, memo} from "react";
+import {AchievementRarityLevel, AchievementWithUserData} from "../../types";
+import {useTranslationContext} from "../../hooks/useTranslationContext";
 
 type Props = Pick<AchievementWithUserData, 'rarity' | 'rarityLevel'>;
 
 const AchievementRarity: FC<Props> = ({rarity, rarityLevel}) => {
-    const translation = useContext(TranslationContext);
+    const translation = useTranslationContext();
 
     if (rarity === 0) {
         return (

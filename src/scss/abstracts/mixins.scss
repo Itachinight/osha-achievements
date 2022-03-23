@@ -3,3 +3,19 @@
     justify-content: center;
     align-items: center;
 }
+
+@mixin lock-height($height) {
+    height: $height;
+    min-height: $height;
+    max-height: $height;
+}
+
+@mixin max-height-zero($duration) {
+    max-height: 0;
+    overflow: hidden;
+    transition: all $duration ease-in-out, max-height $duration * 0.55 ease-in-out $duration * 0.15;
+}
+
+@mixin all-ease-in-out-transition($duration) {
+    transition: all $duration ease-in-out;
+}

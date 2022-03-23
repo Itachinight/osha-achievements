@@ -1,19 +1,16 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useRef, useState} from 'react';
 import ReactModal from 'react-modal';
-import {raf} from '../helpers/raf';
-import {AchievementWithUserData, NoneToVoidFunc} from '../types';
-import Achievement from './Achievement';
-import {ModalAnimation} from '../helpers/ModalAnimation';
-import {delay} from '../helpers/delay';
-import {isSmallWidth} from "../helpers/isSmallWidth";
-import {MODAL_NEAR_CLOSE_DELAY} from "../config";
-import {PREFERS_REDUCE_MOTION} from "../env";
-
-interface Props {
-    activeAchievement: AchievementWithUserData | null
-    onClose: NoneToVoidFunc
-    rect: DOMRect | null
-}
+import {raf} from '../../helpers/raf';
+import {ModalAnimation} from '../../helpers/ModalAnimation';
+import {delay} from '../../helpers/delay';
+import {isSmallWidth} from "../../helpers/isSmallWidth";
+import {MODAL_NEAR_CLOSE_DELAY} from "../../config";
+import {PREFERS_REDUCE_MOTION} from "../../env";
+import {useSelector} from "react-redux";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {closeModal} from "../../redux/slices/detailedAchievementModalSlice";
+import {modalActiveAchievementSelector, modalRectSelector} from "../../redux/selectors";
+import AchievementModal from "../achievement/AchievementModal";
 
 enum ModalOpenCloseState {
     BeforeOpen,
@@ -24,9 +21,14 @@ enum ModalOpenCloseState {
     Closed
 }
 
-const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
+const AchievementDetailedModal: FC = () => {
+    const dispatch = useAppDispatch();
+
+    const activeAchievement = useSelector(modalActiveAchievementSelector);
+    const rect = useSelector(modalRectSelector);
+
     const ref = useRef<HTMLElement | null>(null);
-    const [modalOpenCloseState, setModalOpenCloseState] = useState<ModalOpenCloseState>(ModalOpenCloseState.Closed);
+    const [modalOpenCloseState, setModalOpenCloseState] = useState(ModalOpenCloseState.Closed);
 
     useEffect(() => {
         if (rect == null || activeAchievement == null) {
@@ -39,7 +41,7 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
                 delay(() => setModalOpenCloseState(ModalOpenCloseState.AfterOpen));
             });
 
-            document.body.classList.add('scroll-locked');
+            document.documentElement.classList.add('scroll-locked');
 
             delay(() => setModalOpenCloseState(ModalOpenCloseState.BeforeOpen));
         });
@@ -49,8 +51,8 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
         setModalOpenCloseState(ModalOpenCloseState.BeforeClose);
 
         const handleModalClose = () => {
-            document.body.classList.remove('scroll-locked');
-            onClose();
+            document.documentElement.classList.remove('scroll-locked');
+            dispatch(closeModal());
             setModalOpenCloseState(ModalOpenCloseState.Closed);
         };
 
@@ -63,7 +65,7 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
         if (!PREFERS_REDUCE_MOTION) {
             delay(() => setModalOpenCloseState(ModalOpenCloseState.NearClose), MODAL_NEAR_CLOSE_DELAY);
         }
-    }, [rect, onClose]);
+    }, [rect, dispatch]);
 
     const className = ['achievement-modal'];
 
@@ -98,11 +100,10 @@ const AchievementModal: FC<Props> = ({activeAchievement, onClose, rect}) => {
             portalClassName='achievement-modal__portal'
             overlayClassName='achievement-modal__overlay'
             onRequestClose={handleClose}
-            shouldCloseOnOverlayClick={true}
         >
-            {isOpen && <Achievement achievement={activeAchievement} bothFaces={true}/>}
+            {isOpen && <AchievementModal achievement={activeAchievement}/>}
         </ReactModal>
     )
 };
 
-export default AchievementModal;
+export default memo(AchievementDetailedModal);

@@ -1,11 +1,11 @@
 import React, {FC, memo, useRef, useState} from 'react';
-import {AchievementGroup as AchievementGroupType} from '../types';
-import AchievementsGrid from './AchievementsGrid';
+import {AchievementGroup as AchievementGroupType} from '../../types';
+import AchievementsGrid from '../achievement/AchievementsGrid';
 import AchievementGroupProgress from './AchievementGroupProgress';
-import {preventDefault} from '../helpers/preventDefault';
+import {preventDefault} from '../../helpers/preventDefault';
 import {flushSync} from 'react-dom';
-import {raf} from '../helpers/raf';
-import {animateElementHeight} from '../helpers/animateElementHeight';
+import {raf} from '../../helpers/raf';
+import {animateElementHeight} from '../../helpers/animateElementHeight';
 
 interface Props {
     group: AchievementGroupType

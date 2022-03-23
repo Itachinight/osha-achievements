@@ -1,8 +1,8 @@
 import React, {FC, memo, useMemo} from 'react';
-import {AchievementGroup} from '../types';
-import {useDelayedValue} from '../hooks/useDelayedValue';
+import {AchievementGroup} from '../../types';
+import {useDelayedValue} from '../../hooks/useDelayedValue';
 
-type Props = Pick<AchievementGroup, 'progress'>;
+type Props = Required<Pick<AchievementGroup, 'progress'>>;
 
 const AchievementGroupProgress: FC<Props> = ({progress}) => {
     const delayedValue = useDelayedValue(progress.current, 0);

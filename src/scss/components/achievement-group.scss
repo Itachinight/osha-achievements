@@ -31,14 +31,22 @@
     }
 
     &__header {
-        display: flex;
+        @include mixins.flex-center;
+
         justify-content: space-between;
-        align-items: center;
+        min-height: 35px;
         padding: 0 10px;
         margin-bottom: 15px;
 
         @media (max-width: breakpoints.$large-mobile) {
             flex-direction: column;
+            min-height: 21px;
+        }
+
+        &_skeleton {
+            @media (max-width: breakpoints.$large-mobile) {
+                min-height: 55px;
+            }
         }
     }
 

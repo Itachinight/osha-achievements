@@ -1,13 +1,11 @@
-import React, {FC, memo, useContext} from 'react';
-import {AchievementStats as AchievementStatsType} from '../types';
-import TranslationContext from "./contexts/TranslationContext";
+import React, {FC, memo} from 'react';
+import {useSelector} from "react-redux";
+import {statsSelector} from "../redux/selectors";
+import {useTranslationContext} from "../hooks/useTranslationContext";
 
-interface Props {
-    stats: AchievementStatsType
-}
-
-const AchievementStats: FC<Props> = ({stats}) => {
-    const translation = useContext(TranslationContext);
+const AchievementStats: FC = () => {
+    const translation = useTranslationContext();
+    const stats = useSelector(statsSelector);
 
     return (
         <section className='achievement-stats'>

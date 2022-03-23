@@ -2,6 +2,8 @@
 @use '../abstracts/mixins';
 
 .perspective-card {
+    @include mixins.lock-height(226px);
+
     width: calc(20% - 20px);
     margin: 0 10px 15px;
     perspective: 900px;
@@ -18,6 +20,8 @@
     }
 
     @media (max-width: breakpoints.$tablet) {
+        @include mixins.lock-height(170px);
+
         width: 100%;
         perspective: none;
 
@@ -27,8 +31,16 @@
     }
 
     .achievement-group_no-card & {
+        @include mixins.lock-height(170px);
+
         width: calc(50% - 20px);
         perspective: none;
+
+        @media (max-width: breakpoints.$large) and (min-width: breakpoints.$tablet + 1) {
+            &:only-of-type {
+                width: 70%;
+            }
+        }
 
         @media (max-width: breakpoints.$tablet) {
             width: 100%;
@@ -38,13 +50,14 @@
 
 .achievement {
     position: relative;
+    height: 100%;
     border-radius: 10px;
     user-select: none;
 
     @media (min-width: breakpoints.$tablet + 1) {
-        $duration: 550ms;
+        $duration: 800ms;
 
-        transition: transform $duration linear 50ms;
+        transition: transform $duration cubic-bezier(0.36, 0.88, 0.73, 1.3) 25ms;
         transform-style: preserve-3d;
         will-change: transform;
 
@@ -59,7 +72,7 @@
         }
 
         &_clicked {
-            transition: transform $duration * 0.4 linear;
+            transition: transform $duration * 0.33 linear;
 
             .perspective-card:nth-of-type(1n):hover & {
                 transform: rotate(0);
@@ -68,6 +81,7 @@
     }
 
     &_no-card {
+        height: 100%;
         transform: none !important;
     }
 }
@@ -76,9 +90,8 @@
     @include mixins.flex-center;
 
     flex-direction: column;
+    height: 100%;
     padding: 8px;
-    min-height: 226px;
-    max-height: 226px;
     border-radius: 10px;
     background-color: white;
     box-shadow: var(--card-shadow);
@@ -92,28 +105,26 @@
             content: "";
             position: absolute;
             display: block;
-            width: 45px;
+            width: 50px;
             height: 100%;
             background: #fff;
             background: linear-gradient(
                             to bottom,
-                            rgba(255, 255, 255, 0.5) 0%,
-                            rgba(255, 255, 255, 1) 50%,
-                            rgba(255, 255, 255, 0.5) 100%
+                            rgba(255, 255, 255, 0.6) 0%,
+                            #fff 50%,
+                            rgba(255, 255, 255, 0.6) 100%
             );
-            transform: skew(-45deg);
+            //noinspection CssInvalidFunction
+            transform: skew(-45deg) translate3d(0, 0, 0);
             top: 0;
-            left: -150%;
+            left: -190px;
             z-index: 10;
-            filter: blur(4px);
-            animation: moving-flare 3s ease-in-out 3s infinite;
+            filter: blur(5px);
+            will-change: transform;
+            animation: moving-flare-desktop 2.5s ease-in-out 1s infinite;
 
             @media (max-width: breakpoints.$tablet) {
-                animation-duration: 5s;
-            }
-
-            @media (max-width: breakpoints.$large-mobile) {
-                animation-duration: 4s;
+                animation: moving-flare-mobile 3s ease-in-out 0.5s infinite;
             }
 
             .achievement-group__spoiler_overflow-hidden & {
@@ -122,16 +133,20 @@
         }
     }
 
+    .achievement_no-card.achievement_highlight &::after {
+        animation: moving-flare-desktop-wide 3s ease-in-out 1s infinite;
+
+        @media (max-width: breakpoints.$tablet) {
+            animation-name: moving-flare-mobile;
+        }
+    }
+
     .achievement_no-card & {
         padding: 12px;
-        min-height: unset;
-        max-height: unset;
     }
 
     @media (max-width: breakpoints.$tablet) {
         padding: 12px;
-        min-height: unset;
-        max-height: unset;
     }
 
     @media (max-width: breakpoints.$large-mobile) {
@@ -210,7 +225,8 @@
     width: 110px;
     height: 110px;
     border-radius: 6px;
-    transition: all 500ms linear;
+    transition: all 300ms linear;
+    pointer-events: none;
 
     .achievement_greyscale:not(.achievement_secret) & {
         filter: brightness(0) invert(0.315);
@@ -252,7 +268,7 @@
     color: var(--blue);
 
     .achievement_greyscale & {
-        filter: grayscale(1);
+        color: var(--grey);
     }
 
     .achievement_no-card & {
@@ -416,6 +432,7 @@
     .achievement_no-card & {
         margin-top: 6px;
         grid-area: footer;
+        justify-content: flex-end;
     }
 
     @media (max-width: breakpoints.$tablet) {
@@ -425,10 +442,10 @@
 }
 
 .achievement__prize {
-    min-height: 27px;
-    max-height: 27px;
-    min-width: 27px;
-    max-width: 27px;
+    min-height: 30px;
+    max-height: 30px;
+    min-width: 30px;
+    max-width: 30px;
     margin-left: auto;
     margin-right: 3px;
     background-size: contain;
@@ -454,6 +471,10 @@
     &_platinum {
         background-image: var(--platinum-trophy-url);
     }
+
+    .achievement-group_no-card & {
+        margin: 0;
+    }
 }
 
 .achievement__date {
@@ -475,5 +496,52 @@
         background-position: 50%;
         background-repeat: no-repeat;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 612 612' fill='%23505050'%3E%3Cpath d='M612 463.781c0-70.342-49.018-129.199-114.75-144.379-10.763-2.482-21.951-3.84-33.469-3.84-3.218 0-6.397.139-9.562.34-71.829 4.58-129.725 60.291-137.69 131.145-.617 5.494-.966 11.073-.966 16.734 0 10.662 1.152 21.052 3.289 31.078C333.139 561.792 392.584 612 463.781 612 545.641 612 612 545.641 612 463.781zm-148.219 98.016c-54.133 0-98.016-43.883-98.016-98.016s43.883-98.016 98.016-98.016 98.016 43.883 98.016 98.016-43.883 98.016-98.016 98.016z'/%3E%3Cpath d='M482.906 396.844h-33.468v52.594h-52.594v33.468h86.062v-33.468zM109.969 0c-9.228 0-16.734 7.507-16.734 16.734V95.625c0 9.228 7.506 16.734 16.734 16.734h14.344c9.228 0 16.734-7.507 16.734-16.734V16.734C141.047 7.507 133.541 0 124.312 0h-14.343zM372.938 0c-9.228 0-16.734 7.507-16.734 16.734V95.625c0 9.228 7.507 16.734 16.734 16.734h14.344c9.228 0 16.734-7.507 16.734-16.734V16.734C404.016 7.507 396.509 0 387.281 0h-14.343z'/%3E%3Cpath d='M38.25 494.859h236.672A181.687 181.687 0 01271.35 459c0-4.021.177-7.999.435-11.953H71.719c-15.845 0-28.688-12.843-28.688-28.688v-229.5h411.188v88.707c3.165-.163 6.354-.253 9.562-.253 11.437 0 22.61 1.109 33.469 3.141V93.234c0-21.124-17.126-38.25-38.25-38.25h-31.078v40.641c0 22.41-18.23 40.641-40.641 40.641h-14.344c-22.41 0-40.641-18.231-40.641-40.641V54.984H164.953v40.641c0 22.41-18.231 40.641-40.641 40.641h-14.344c-22.41 0-40.641-18.231-40.641-40.641V54.984H38.25C17.126 54.984 0 72.111 0 93.234v363.375c0 21.124 17.126 38.25 38.25 38.25z'/%3E%3Ccircle cx='134.774' cy='260.578' r='37.954'/%3E%3Ccircle cx='248.625' cy='260.578' r='37.954'/%3E%3Ccircle cx='362.477' cy='260.578' r='37.954'/%3E%3Ccircle cx='248.625' cy='375.328' r='37.953'/%3E%3Ccircle cx='134.774' cy='375.328' r='37.953'/%3E%3C/svg%3E%0A");
+    }
+}
+
+.special-group-skeleton {
+    height: 185px;
+
+    @media (max-width: breakpoints.$tablet) {
+        height: 355px;
+    }
+
+    &__svg {
+        display: block;
+        height: 170px;
+
+        @media (max-width: breakpoints.$tablet) {
+            height: 355px;
+            padding: 0 10px;
+        }
+    }
+
+    &__rect {
+        height: 100%;
+        width: calc(50% - 20px);
+        y: 0;
+        border-radius: 10px;
+
+        @media (max-width: breakpoints.$tablet) {
+            height: 170px;
+            width: 100%;
+        }
+    }
+
+    &__rect:first-of-type {
+        x: 10px;
+
+        @media (max-width: breakpoints.$tablet) {
+            x: 0;
+        }
+    }
+
+    &__rect:last-of-type {
+        x: calc(50% + 10px);
+
+        @media (max-width: breakpoints.$tablet) {
+            x: 0;
+            y: 185px;
+        }
     }
 }

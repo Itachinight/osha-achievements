@@ -1,5 +1,5 @@
 import React, {FC, memo} from 'react';
-import {AchievementWithUserData} from "../types";
+import {AchievementWithUserData} from "../../types";
 
 type Props = Required<Pick<AchievementWithUserData, 'progress'>>;
 

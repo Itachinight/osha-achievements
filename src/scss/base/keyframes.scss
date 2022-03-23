@@ -1,8 +1,27 @@
-@keyframes moving-flare {
+//noinspection CssInvalidFunction
+@keyframes moving-flare-desktop {
     from {
-        left: -150%;
+        transform: skew(-45deg) translate3d(0, 0, 0);
     }
     to {
-        left: 175%;
+        transform: skew(-45deg) translate3d(580px, 0, 0);
+    }
+}
+//noinspection CssInvalidFunction
+@keyframes moving-flare-desktop-wide {
+    from {
+        transform: skew(-45deg) translate3d(0, 0, 0);
+    }
+    to {
+        transform: skew(-45deg) translate3d(1000px, 0, 0);
+    }
+}
+//noinspection CssInvalidFunction
+@keyframes moving-flare-mobile {
+    from {
+        transform: skew(-45deg) translate3d(0, 0, 0);
+    }
+    to {
+        transform: skew(-45deg) translate3d(160vw, 0, 0);
     }
 }
