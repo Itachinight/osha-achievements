@@ -23,7 +23,7 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
 
     const handleClick = () => {
         setIsClicked(true);
-        delay(() => setIsClicked(false), 250);
+        delay(() => setIsClicked(false), ACHIEVEMENT_CLICK_DELAY);
 
         const rect = ref.current!.getBoundingClientRect();
 
@@ -35,8 +35,8 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
             return;
         }
 
-        delay(() => dispatch(readAchievement(achievement)), 400);
-    }
+        delay(() => dispatch(readAchievement(achievement)), 500);
+    };
 
     const achievementClassName = ['achievement'];
 

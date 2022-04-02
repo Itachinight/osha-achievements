@@ -1,10 +1,11 @@
-import React, {FC, memo, useRef, useState} from 'react';
+import React, {FC, memo, useMemo, useRef, useState} from 'react';
 import {AchievementWithUserData} from '../../types';
 import {delay} from "../../helpers/delay";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {openModal} from "../../redux/slices/detailedAchievementModalSlice";
 import AchievementPicture from "./AchievementPicture";
 import {readAchievement} from "../../redux/slices/achievementsSlice";
+import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -18,7 +19,7 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
 
     const handleClick = () => {
         setIsClicked(true);
-        delay(() => setIsClicked(false), 250);
+        delay(() => setIsClicked(false), ACHIEVEMENT_CLICK_DELAY);
 
         const rect = ref.current!.getBoundingClientRect();
 
@@ -30,8 +31,8 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
             return;
         }
 
-        delay(() => dispatch(readAchievement(achievement)), 400);
-    }
+        delay(() => dispatch(readAchievement(achievement)), 500);
+    };
 
     const achievementClassName = ['achievement', 'achievement_no-card'];
 
@@ -47,13 +48,19 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
         achievementClassName.push('achievement_clicked');
     }
 
-    const total = achievement.progress != null && achievement.progress.current > 0 ? achievement.progress.current : 1;
+    const prizeElements = useMemo(() => {
+        const arr = [];
 
-    const prizeElements = [];
+        const total = achievement.progress != null && achievement.progress.current > 0 ?
+            achievement.progress.current :
+            1;
 
-    for (let i = 0; i < total; i++) {
-        prizeElements.push(<i className='achievement__prize achievement__prize_ruby' key={i}/>);
-    }
+        for (let i = 0; i < total; i++) {
+            arr.push(<i className='achievement__prize achievement__prize_ruby' key={i}/>);
+        }
+
+        return arr;
+    }, [achievement]);
 
     return (
         <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
