@@ -22,7 +22,7 @@ const App: FC = () => {
     useEffectOnce(() => {
         dispatch(initialAchievementsLoad())
             .unwrap()
-            .then((responseData) => dispatch(calculateStats(responseData)));
+            .then((responseData) => dispatch(calculateStats(responseData.achievementData)));
     });
 
     return (

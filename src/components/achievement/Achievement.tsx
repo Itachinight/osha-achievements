@@ -1,4 +1,4 @@
-import React, {FC, memo, useRef, useState} from 'react';
+import React, {FC, memo, useCallback, useRef, useState} from 'react';
 import {AchievementWithUserData} from '../../types';
 import {getAchievementPrizeClassName} from "../../helpers/getAchievementPrizeClassName";
 import AchievementProgress from "./AchievementProgress";
@@ -7,8 +7,9 @@ import {delay} from "../../helpers/delay";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {openModal} from "../../redux/slices/detailedAchievementModalSlice";
 import AchievementPicture from "./AchievementPicture";
-import {readAchievement} from "../../redux/slices/achievementsSlice";
 import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
+import {readAchievement} from "../../redux/actions/readAchievement";
+import throttle from "lodash/throttle";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -30,13 +31,13 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
         delay(() => dispatch(openModal({activeAchievement: achievement, rect})), noCard ? 0 : ACHIEVEMENT_CLICK_DELAY);
     };
 
-    const handleHover = () => {
-        if (!achievement.isUnread) {
-            return;
-        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const throttledAchievementRead = useCallback(
+        throttle(() => dispatch(readAchievement(achievement)), 500, {trailing: false}),
+        [achievement]
+    );
 
-        delay(() => dispatch(readAchievement(achievement)), 500);
-    };
+    const handleHover = achievement.isUnread ? throttledAchievementRead : undefined;
 
     const achievementClassName = ['achievement'];
 

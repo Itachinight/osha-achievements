@@ -1,12 +1,14 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AchievementGroup, AchievementWithUserData} from '../../types';
+import {createSlice} from "@reduxjs/toolkit";
+import {AchievementGroup, AchievementWithUserData, UserData} from '../../types';
 import {initialAchievementsLoad} from "../actions/initialAchievementsLoad";
+import {readAchievement as readAchievementAction} from "../actions/readAchievement";
 
 interface AchievementsSliceState {
     groups: AchievementGroup[]
     uncategorized: AchievementGroup | null
     platinum: AchievementWithUserData | null
     lengthOfService: AchievementWithUserData | null
+    userData: UserData | null
 }
 
 const initialState: AchievementsSliceState = {
@@ -14,13 +16,26 @@ const initialState: AchievementsSliceState = {
     uncategorized: null,
     platinum: null,
     lengthOfService: null,
+    userData: null,
 }
 
 const achievementsSlice = createSlice({
     name: 'achievements',
     initialState,
-    reducers: {
-        readAchievement(state, action: PayloadAction<AchievementWithUserData>) {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(initialAchievementsLoad.fulfilled, (state, action) => {
+            const {groups, uncategorized, platinum, lengthOfService} = action.payload.achievementData;
+            const {userData} = action.payload;
+
+            state.groups = groups;
+            state.uncategorized = uncategorized;
+            state.platinum = platinum;
+            state.lengthOfService = lengthOfService;
+            state.userData = userData;
+        });
+
+        builder.addCase(readAchievementAction.fulfilled, (state, action) => {
             const targetAchievement = action.payload;
 
             let groups = [...state.groups];
@@ -44,16 +59,6 @@ const achievementsSlice = createSlice({
                     break;
                 }
             }
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(initialAchievementsLoad.fulfilled, (state, action) => {
-            const {groups, uncategorized, platinum, lengthOfService} = action.payload;
-
-            state.groups = groups;
-            state.uncategorized = uncategorized;
-            state.platinum = platinum;
-            state.lengthOfService = lengthOfService;
         });
     },
 });
@@ -61,4 +66,3 @@ const achievementsSlice = createSlice({
 export default achievementsSlice;
 
 export const achievementsReducer = achievementsSlice.reducer;
-export const {readAchievement} = achievementsSlice.actions;
