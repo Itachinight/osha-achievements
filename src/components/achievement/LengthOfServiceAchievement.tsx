@@ -71,6 +71,9 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
                             title={achievement.title}
                             iconPng={achievement.iconPng}
                             iconWebp={achievement.iconWebp}
+                            isCompleted={Boolean(achievement.progress?.current)}
+                            hiddenIconPng={achievement.hiddenIconPng}
+                            hiddenIconWebp={achievement.hiddenIconWebp}
                         />
                         <h3 className='achievement__title'>
                             {achievement.title}

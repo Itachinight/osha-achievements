@@ -18,10 +18,6 @@ const AchievementModal: FC<Props> = ({achievement}) => {
 
     const achievementClassName = ['achievement'];
 
-    if (achievement.isSecret) {
-        achievementClassName.push('achievement_secret');
-    }
-
     if (!achievement.isCompleted && counter !== 3) {
         achievementClassName.push('achievement_greyscale');
     }
@@ -36,6 +32,9 @@ const AchievementModal: FC<Props> = ({achievement}) => {
                         title={achievement.title}
                         iconPng={achievement.iconPng}
                         iconWebp={achievement.iconWebp}
+                        isCompleted={achievement.isCompleted || counter === 3}
+                        hiddenIconPng={achievement.hiddenIconPng}
+                        hiddenIconWebp={achievement.hiddenIconWebp}
                     />
                     <h3 className='achievement__title'>
                         {achievement.title}

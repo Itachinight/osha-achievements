@@ -44,10 +44,6 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
         achievementClassName.push('achievement_no-card');
     }
 
-    if (achievement.isSecret) {
-        achievementClassName.push('achievement_secret');
-    }
-
     if (!achievement.isCompleted) {
         achievementClassName.push('achievement_greyscale');
     }
@@ -71,6 +67,9 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
                             title={achievement.title}
                             iconPng={achievement.iconPng}
                             iconWebp={achievement.iconWebp}
+                            isCompleted={achievement.isCompleted}
+                            hiddenIconPng={achievement.hiddenIconPng}
+                            hiddenIconWebp={achievement.hiddenIconWebp}
                         />
                         <h3 className='achievement__title'>
                             {achievement.title}

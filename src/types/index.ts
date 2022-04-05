@@ -53,6 +53,8 @@ export interface AchievementWithUserData {
     cost: AchievementCost
     iconPng: string
     iconWebp: string
+    hiddenIconPng: string
+    hiddenIconWebp: string
     title: string
     description: string
     isSecret: boolean
@@ -77,7 +79,6 @@ export interface AchievementResponseData {
     uncategorized: AchievementGroup
     platinum: AchievementWithUserData
     lengthOfService: AchievementWithUserData | null
-    elapsed: string
 }
 
 export type NoneToVoidFunc = () => void;
