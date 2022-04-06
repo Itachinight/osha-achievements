@@ -24,17 +24,16 @@ const AchievementModal: FC<Props> = ({achievement}) => {
 
     const trophyClassName = ['achievement__prize', getAchievementPrizeClassName(achievement)];
 
+    const isCompleted = achievement.isCompleted || counter === 3;
+
     return (
         <div className={achievementClassName.join(' ')}>
             <div className='achievement__front-face'>
                 <div className='achievement__body'>
                     <AchievementPicture
                         title={achievement.title}
-                        iconPng={achievement.iconPng}
-                        iconWebp={achievement.iconWebp}
-                        isCompleted={achievement.isCompleted || counter === 3}
-                        hiddenIconPng={achievement.hiddenIconPng}
-                        hiddenIconWebp={achievement.hiddenIconWebp}
+                        iconPng={isCompleted ? achievement.iconPng : achievement.hiddenIconPng}
+                        iconWebp={isCompleted ? achievement.iconWebp : achievement.hiddenIconWebp}
                     />
                     <h3 className='achievement__title'>
                         {achievement.title}

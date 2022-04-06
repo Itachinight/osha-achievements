@@ -63,6 +63,8 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
         return arr;
     }, [achievement]);
 
+    const isCompleted = Boolean(achievement.progress?.current);
+
     return (
         <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
             <div className={achievementClassName.join(' ')} onClick={handleClick}>
@@ -70,11 +72,8 @@ const LengthOfServiceAchievement: FC<Props> = ({achievement}) => {
                     <div className='achievement__body'>
                         <AchievementPicture
                             title={achievement.title}
-                            iconPng={achievement.iconPng}
-                            iconWebp={achievement.iconWebp}
-                            isCompleted={Boolean(achievement.progress?.current)}
-                            hiddenIconPng={achievement.hiddenIconPng}
-                            hiddenIconWebp={achievement.hiddenIconWebp}
+                            iconPng={isCompleted ? achievement.iconPng : achievement.hiddenIconPng}
+                            iconWebp={isCompleted ? achievement.iconWebp : achievement.hiddenIconWebp}
                         />
                         <h3 className='achievement__title'>
                             {achievement.title}

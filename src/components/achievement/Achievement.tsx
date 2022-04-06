@@ -66,11 +66,8 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
                     <div className='achievement__body'>
                         <AchievementPicture
                             title={achievement.title}
-                            iconPng={achievement.iconPng}
-                            iconWebp={achievement.iconWebp}
-                            isCompleted={achievement.isCompleted}
-                            hiddenIconPng={achievement.hiddenIconPng}
-                            hiddenIconWebp={achievement.hiddenIconWebp}
+                            iconPng={achievement.isCompleted ? achievement.iconPng : achievement.hiddenIconPng}
+                            iconWebp={achievement.isCompleted ? achievement.iconWebp : achievement.hiddenIconWebp}
                         />
                         <h3 className='achievement__title'>
                             {achievement.title}
