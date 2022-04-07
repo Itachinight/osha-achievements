@@ -6,6 +6,7 @@ import AchievementDate from "./AchievementDate";
 import AchievementRarity from "./AchievementRarity";
 import AchievementPicture from "./AchievementPicture";
 import {useCounter} from "react-use";
+import LengthOfServiceAchievementPrizeElements from "./LengthOfServiceAchievementPrizeElements";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -16,15 +17,16 @@ const AchievementModal: FC<Props> = ({achievement}) => {
 
     const handleTrophyClick = () => counter === 3 ? reset() : inc();
 
+    const isLengthOfServiceAchievement = achievement.id === 0;
+    const isCompleted = isLengthOfServiceAchievement ?
+        !!achievement.progress?.current || counter === 3 :
+        achievement.isCompleted || counter === 3;
+
     const achievementClassName = ['achievement'];
 
-    if (!achievement.isCompleted && counter !== 3) {
+    if (!isCompleted) {
         achievementClassName.push('achievement_greyscale');
     }
-
-    const trophyClassName = ['achievement__prize', getAchievementPrizeClassName(achievement)];
-
-    const isCompleted = achievement.isCompleted || counter === 3;
 
     return (
         <div className={achievementClassName.join(' ')}>
@@ -41,12 +43,17 @@ const AchievementModal: FC<Props> = ({achievement}) => {
                     <div className='achievement__description'>
                         {achievement.description}
                     </div>
-                    {achievement.progress != null && <AchievementProgress progress={achievement.progress}/>}
+                    {achievement.progress != null && !isLengthOfServiceAchievement &&
+                        <AchievementProgress progress={achievement.progress}/>
+                    }
                     <AchievementRarity rarity={achievement.rarity} rarityLevel={achievement.rarityLevel}/>
                 </div>
                 <div className='achievement__footer'>
                     {achievement.date != null && <AchievementDate date={achievement.date}/>}
-                    <i onClick={handleTrophyClick} className={trophyClassName.join(' ')}/>
+                    {isLengthOfServiceAchievement ?
+                        <LengthOfServiceAchievementPrizeElements achievement={achievement}/> :
+                        <i onClick={handleTrophyClick} className={getAchievementPrizeClassName(achievement)}/>
+                    }
                 </div>
             </div>
         </div>

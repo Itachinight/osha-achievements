@@ -10,6 +10,7 @@ import AchievementPicture from "./AchievementPicture";
 import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
 import {readAchievement} from "../../redux/actions/readAchievement";
 import throttle from "lodash/throttle";
+import LengthOfServiceAchievementPrizeElements from "./LengthOfServiceAchievementPrizeElements";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -39,25 +40,26 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
 
     const handleHover = achievement.isUnread ? throttledAchievementRead : undefined;
 
+    const isLengthOfServiceAchievement = achievement.id === 0;
+    const isCompleted = isLengthOfServiceAchievement ? !!achievement.progress?.current : achievement.isCompleted;
+
     const achievementClassName = ['achievement'];
 
     if (noCard) {
         achievementClassName.push('achievement_no-card');
     }
 
-    if (!achievement.isCompleted) {
+    if (!isCompleted) {
         achievementClassName.push('achievement_greyscale');
     }
 
-    if (achievement.isUnread) {
+    if (isCompleted && achievement.isUnread) {
         achievementClassName.push('achievement_highlight');
     }
 
     if (isClicked) {
         achievementClassName.push('achievement_clicked');
     }
-
-    const trophyClassName = ['achievement__prize', getAchievementPrizeClassName(achievement)];
 
     return (
         <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
@@ -66,20 +68,25 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
                     <div className='achievement__body'>
                         <AchievementPicture
                             title={achievement.title}
-                            iconPng={achievement.isCompleted ? achievement.iconPng : achievement.hiddenIconPng}
-                            iconWebp={achievement.isCompleted ? achievement.iconWebp : achievement.hiddenIconWebp}
+                            iconPng={isCompleted ? achievement.iconPng : achievement.hiddenIconPng}
+                            iconWebp={isCompleted ? achievement.iconWebp : achievement.hiddenIconWebp}
                         />
                         <h3 className='achievement__title'>
                             {achievement.title}
                         </h3>
-                        {achievement.progress != null && <AchievementProgress progress={achievement.progress}/>}
+                        {achievement.progress != null && !isLengthOfServiceAchievement &&
+                            <AchievementProgress progress={achievement.progress}/>
+                        }
                         <div className='achievement__description'>
                             {achievement.description}
                         </div>
                     </div>
                     <div className='achievement__footer'>
                         {achievement.date != null && <AchievementDate date={achievement.date}/>}
-                        <i className={trophyClassName.join(' ')}/>
+                        {isLengthOfServiceAchievement ?
+                            <LengthOfServiceAchievementPrizeElements achievement={achievement}/> :
+                            <i className={getAchievementPrizeClassName(achievement)}/>
+                        }
                     </div>
                 </div>
                 {!noCard && <div className='achievement__back-face'>{achievement.description}</div>}
