@@ -9,7 +9,6 @@ import AchievementGroupsContainer from "./achievement-group/AchievementGroupsCon
 import {useAppDispatch} from "../hooks/useAppDispatch";
 import AchievementModal from "./modals/AchievementDetailedModal";
 import {useTranslation} from "../hooks/useTranslation";
-import {calculateStats} from "../redux/slices/achievementStatsSlice";
 import {initialAchievementsLoad} from "../redux/actions/initialAchievementsLoad";
 import {SCROLLBAR_WIDTH_PROPERTY_NAME} from "../config";
 
@@ -20,9 +19,7 @@ const App: FC = () => {
     useScrollbarWidthCustomProperty(SCROLLBAR_WIDTH_PROPERTY_NAME);
 
     useEffectOnce(() => {
-        dispatch(initialAchievementsLoad())
-            .unwrap()
-            .then((responseData) => dispatch(calculateStats(responseData.achievementData)));
+        dispatch(initialAchievementsLoad());
     });
 
     return (

@@ -79,6 +79,7 @@ export interface AchievementResponseData {
     uncategorized: AchievementGroup
     platinum: AchievementWithUserData
     lengthOfService: AchievementWithUserData | null
+    stats: AchievementStats
 }
 
 export type NoneToVoidFunc = () => void;
@@ -87,9 +88,9 @@ export interface AchievementStats {
     bronze: number
     silver: number
     golden: number
+    groups: number
     ruby: number
     platinum: number
-    groupsCompleted: number
     totalPoints: number
     progress: Progress
 }

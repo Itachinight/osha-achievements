@@ -1,6 +1,6 @@
 import {RootState} from '../index';
 
-export const statsSelector = (state: RootState) => state.achievementStats;
+export const statsSelector = (state: RootState) => state.achievements.stats;
 export const achievementGroupsSelector = (state: RootState) => state.achievements.groups;
 export const uncategorizedGroupSelector = (state: RootState) => state.achievements.uncategorized;
 export const platinumAchievementSelector = (state: RootState) => state.achievements.platinum;
