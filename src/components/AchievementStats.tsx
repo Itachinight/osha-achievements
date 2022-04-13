@@ -10,7 +10,7 @@ const AchievementStats: FC = () => {
     return (
         <section className='achievement-stats'>
             <div className='achievement-stats__points'>
-                <span>{stats.totalPoints} {translation.points}</span>
+                <span>{stats.points} {translation.points}</span>
                 <div className='achievement-stats__points-help'>
                     <p>
                         <i className='achievement__prize achievement__prize_platinum'/> - 250 {translation.points}

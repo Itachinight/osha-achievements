@@ -24,11 +24,7 @@ const initialState: AchievementsSliceState = {
         groups: 0,
         ruby: 0,
         platinum: 0,
-        totalPoints: 0,
-        progress: {
-            current: 0,
-            max: 0,
-        },
+        points: 0,
     },
     userData: null,
 }

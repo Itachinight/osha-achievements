@@ -91,6 +91,5 @@ export interface AchievementStats {
     groups: number
     ruby: number
     platinum: number
-    totalPoints: number
-    progress: Progress
+    points: number
 }
