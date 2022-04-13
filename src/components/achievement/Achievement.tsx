@@ -10,14 +10,14 @@ import AchievementPicture from "./AchievementPicture";
 import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
 import {readAchievement} from "../../redux/actions/readAchievement";
 import throttle from "lodash/throttle";
-import LengthOfServiceAchievementPrizeElements from "./LengthOfServiceAchievementPrizeElements";
+import SpecialAchievementPrizeElements from "./SpecialAchievementPrizeElements";
 
 interface Props {
     achievement: AchievementWithUserData
-    noCard?: boolean
+    isSpecial?: boolean
 }
 
-const Achievement: FC<Props> = ({achievement, noCard = false}) => {
+const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement | null>(null);
@@ -29,7 +29,7 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
 
         const rect = ref.current!.getBoundingClientRect();
 
-        delay(() => dispatch(openModal({activeAchievement: achievement, rect})), noCard ? 0 : ACHIEVEMENT_CLICK_DELAY);
+        delay(() => dispatch(openModal({activeAchievement: achievement, rect})), isSpecial ? 0 : ACHIEVEMENT_CLICK_DELAY);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,12 +40,11 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
 
     const handleHover = achievement.isUnread ? throttledAchievementRead : undefined;
 
-    const isLengthOfServiceAchievement = achievement.id === 0;
-    const isCompleted = isLengthOfServiceAchievement ? !!achievement.progress?.current : achievement.isCompleted;
+    const isCompleted = isSpecial ? Boolean(achievement.progress?.current) : achievement.isCompleted;
 
     const achievementClassName = ['achievement'];
 
-    if (noCard) {
+    if (isSpecial) {
         achievementClassName.push('achievement_no-card');
     }
 
@@ -74,7 +73,7 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
                         <h3 className='achievement__title'>
                             {achievement.title}
                         </h3>
-                        {achievement.progress != null && !isLengthOfServiceAchievement &&
+                        {achievement.progress != null && !isSpecial &&
                             <AchievementProgress progress={achievement.progress}/>
                         }
                         <div className='achievement__description'>
@@ -83,13 +82,13 @@ const Achievement: FC<Props> = ({achievement, noCard = false}) => {
                     </div>
                     <div className='achievement__footer'>
                         {achievement.date != null && <AchievementDate date={achievement.date}/>}
-                        {isLengthOfServiceAchievement ?
-                            <LengthOfServiceAchievementPrizeElements achievement={achievement}/> :
+                        {isSpecial ?
+                            <SpecialAchievementPrizeElements achievement={achievement}/> :
                             <i className={getAchievementPrizeClassName(achievement)}/>
                         }
                     </div>
                 </div>
-                {!noCard && <div className='achievement__back-face'>{achievement.description}</div>}
+                {!isSpecial && <div className='achievement__back-face'>{achievement.description}</div>}
             </div>
         </div>
     );

@@ -1,12 +1,12 @@
 import React, {FC, memo} from 'react';
-import {AchievementWithUserData} from '../../types';
+import {AchievementCost, AchievementWithUserData} from '../../types';
 import {getAchievementPrizeClassName} from "../../helpers/getAchievementPrizeClassName";
 import AchievementProgress from "./AchievementProgress";
 import AchievementDate from "./AchievementDate";
 import AchievementRarity from "./AchievementRarity";
 import AchievementPicture from "./AchievementPicture";
 import {useCounter} from "react-use";
-import LengthOfServiceAchievementPrizeElements from "./LengthOfServiceAchievementPrizeElements";
+import SpecialAchievementPrizeElements from "./SpecialAchievementPrizeElements";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -17,9 +17,9 @@ const AchievementModal: FC<Props> = ({achievement}) => {
 
     const handleTrophyClick = () => counter === 3 ? reset() : inc();
 
-    const isLengthOfServiceAchievement = achievement.id === 0;
-    const isCompleted = isLengthOfServiceAchievement ?
-        !!achievement.progress?.current || counter === 3 :
+    const isSpecial = achievement.id === 0 || achievement.cost === AchievementCost.PLATINUM;
+    const isCompleted = isSpecial ?
+        Boolean(achievement.progress?.current) || counter === 3 :
         achievement.isCompleted || counter === 3;
 
     const achievementClassName = ['achievement'];
@@ -43,15 +43,15 @@ const AchievementModal: FC<Props> = ({achievement}) => {
                     <div className='achievement__description'>
                         {achievement.description}
                     </div>
-                    {achievement.progress != null && !isLengthOfServiceAchievement &&
+                    {achievement.progress != null && !isSpecial &&
                         <AchievementProgress progress={achievement.progress}/>
                     }
                     <AchievementRarity rarity={achievement.rarity} rarityLevel={achievement.rarityLevel}/>
                 </div>
                 <div className='achievement__footer'>
                     {achievement.date != null && <AchievementDate date={achievement.date}/>}
-                    {isLengthOfServiceAchievement ?
-                        <LengthOfServiceAchievementPrizeElements achievement={achievement}/> :
+                    {isSpecial ?
+                        <SpecialAchievementPrizeElements achievement={achievement}/> :
                         <i onClick={handleTrophyClick} className={getAchievementPrizeClassName(achievement)}/>
                     }
                 </div>

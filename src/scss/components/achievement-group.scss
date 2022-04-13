@@ -147,6 +147,15 @@
             }
         }
     }
+
+    &__completed-icon {
+        width: 32px;
+        height: 32px;
+        background-size: contain;
+        background-image: var(--star-trophy-url);
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 }
 
 .achievements-grid {

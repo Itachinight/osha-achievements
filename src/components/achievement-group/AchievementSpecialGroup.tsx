@@ -13,9 +13,9 @@ const AchievementSpecialGroup: FC = () => {
             {platinum == null ?
                 <SpecialGroupSkeleton/> :
                 <div className='achievements-grid'>
-                    <Achievement key={platinum.id} achievement={platinum} noCard/>
+                    <Achievement key={platinum.id} achievement={platinum} isSpecial/>
                     {lengthOfService != null &&
-                        <Achievement key={lengthOfService.id} achievement={lengthOfService} noCard/>
+                        <Achievement key={lengthOfService.id} achievement={lengthOfService} isSpecial/>
                     }
                 </div>
             }
