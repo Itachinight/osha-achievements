@@ -160,6 +160,15 @@
 
         &_star {
             --img: var(--star-trophy-url);
+            --size: 46px;
+
+            @media (max-width: breakpoints.$large-mobile) {
+                --size: 42px;
+            }
+
+            @media (max-width: breakpoints.$small-mobile) {
+                --size: 38px;
+            }
         }
     }
 
