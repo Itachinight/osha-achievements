@@ -35,7 +35,7 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
         }
     });
 
-    const {observe, inView} = useInView({
+    const {observe, inView} = useInView<HTMLDivElement>({
         threshold: 0,
     });
 
@@ -77,7 +77,13 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
     }
 
     return (
-        <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
+        <div className='perspective-card'
+             onMouseOver={handleHover}
+             ref={(elem) => {
+                 observe(elem);
+                 ref.current = elem;
+             }}
+        >
             <div ref={observe} className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
