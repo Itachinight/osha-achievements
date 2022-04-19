@@ -16,6 +16,9 @@ const AchievementStats: FC = () => {
                         <i className='achievement__prize achievement__prize_platinum'/> - 250 {translation.points}
                     </p>
                     <p>
+                        <i className='achievement__prize achievement__prize_star'/> - 50 {translation.points}
+                    </p>
+                    <p>
                         <i className='achievement__prize achievement__prize_ruby'/> - 30 {translation.points}
                     </p>
                     <p>
@@ -45,12 +48,12 @@ const AchievementStats: FC = () => {
                         <span className='achievement-trophy__count'>{stats.golden}</span>
                     </div>
                     <div className='achievement-trophy'>
-                        <i className='achievement-trophy__image achievement-trophy__image_star' data-tooltip={`50 ${translation.points}`}/>
-                        <span className='achievement-trophy__count'>{stats.groups}</span>
-                    </div>
-                    <div className='achievement-trophy'>
                         <i className='achievement-trophy__image achievement-trophy__image_ruby' data-tooltip={`30 ${translation.points}`}/>
                         <span className='achievement-trophy__count'>{stats.ruby}</span>
+                    </div>
+                    <div className='achievement-trophy'>
+                        <i className='achievement-trophy__image achievement-trophy__image_star' data-tooltip={`50 ${translation.points}`}/>
+                        <span className='achievement-trophy__count'>{stats.groups}</span>
                     </div>
                     <div className='achievement-trophy'>
                         <i className='achievement-trophy__image achievement-trophy__image_platinum' data-tooltip={`250 ${translation.points}`}/>

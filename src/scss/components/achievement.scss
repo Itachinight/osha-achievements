@@ -112,7 +112,7 @@
             left: -190px;
             z-index: 10;
             filter: blur(3px);
-            animation: moving-flare-desktop 2.5s ease-in-out 1.5s infinite;
+            animation: moving-flare-desktop 2.5s ease-in-out 0.75s infinite;
 
             @media (max-width: breakpoints.$tablet) {
                 animation: moving-flare-mobile 3s ease-in-out 0.75s infinite;
@@ -428,10 +428,12 @@
 }
 
 .achievement__prize {
-    min-height: 30px;
-    max-height: 30px;
-    min-width: 30px;
-    max-width: 30px;
+    --size: 30px;
+
+    min-height: var(--size);
+    max-height: var(--size);
+    min-width: var(--size);
+    max-width: var(--size);
     margin-left: auto;
     margin-right: 3px;
     background-size: contain;
@@ -456,6 +458,12 @@
 
     &_platinum {
         background-image: var(--platinum-trophy-url);
+    }
+
+    &_star {
+        --size: 28px;
+        margin-right: 5px;
+        background-image: var(--star-trophy-url);
     }
 
     .achievement-group_no-card & {
