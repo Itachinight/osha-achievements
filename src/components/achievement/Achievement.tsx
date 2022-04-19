@@ -1,4 +1,5 @@
 import React, {FC, memo, useCallback, useRef, useState} from 'react';
+import { useInView } from "react-cool-inview";
 import {AchievementWithUserData} from '../../types';
 import {getAchievementPrizeClassName} from "../../helpers/getAchievementPrizeClassName";
 import AchievementProgress from "./AchievementProgress";
@@ -22,6 +23,10 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
 
     const ref = useRef<HTMLDivElement | null>(null);
     const [isClicked, setIsClicked] = useState(false);
+
+    const {observe, inView} = useInView({
+        threshold: 0,
+    });
 
     const handleClick = () => {
         setIsClicked(true);
@@ -52,7 +57,7 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
         achievementClassName.push('achievement_greyscale');
     }
 
-    if (isCompleted && achievement.isUnread) {
+    if (isCompleted && achievement.isUnread && inView) {
         achievementClassName.push('achievement_highlight');
     }
 
@@ -62,7 +67,7 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
 
     return (
         <div ref={ref} className='perspective-card' onMouseOver={handleHover}>
-            <div className={achievementClassName.join(' ')} onClick={handleClick}>
+            <div ref={observe} className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
                         <AchievementPicture
