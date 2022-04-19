@@ -5,5 +5,6 @@ export const achievementGroupsSelector = (state: RootState) => state.achievement
 export const uncategorizedGroupSelector = (state: RootState) => state.achievements.uncategorized;
 export const platinumAchievementSelector = (state: RootState) => state.achievements.platinum;
 export const lengthOfServiceAchievementSelector = (state: RootState) => state.achievements.lengthOfService;
+export const queryAchievementIdSelector = (state: RootState) => state.achievements.queryAchievementId;
 export const modalActiveAchievementSelector = (state: RootState) => state.detailedAchievementModal.activeAchievement;
 export const modalRectSelector = (state: RootState) => state.detailedAchievementModal.rect;

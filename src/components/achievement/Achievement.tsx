@@ -12,6 +12,9 @@ import {ACHIEVEMENT_CLICK_DELAY} from "../../config";
 import {readAchievement} from "../../redux/actions/readAchievement";
 import throttle from "lodash/throttle";
 import SpecialAchievementPrizeElements from "./SpecialAchievementPrizeElements";
+import {useSelector} from "react-redux";
+import {queryAchievementIdSelector} from "../../redux/selectors";
+import {useEffectOnce} from "react-use";
 
 interface Props {
     achievement: AchievementWithUserData
@@ -19,10 +22,18 @@ interface Props {
 }
 
 const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
+    const queryAchievementId = useSelector(queryAchievementIdSelector);
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement | null>(null);
     const [isClicked, setIsClicked] = useState(false);
+
+    useEffectOnce(() => {
+        if (queryAchievementId === achievement.id) {
+            dispatch(readAchievement(achievement));
+            delay(() => ref.current?.scrollIntoView({behavior: 'smooth', block: 'center'}), 500);
+        }
+    });
 
     const {observe, inView} = useInView({
         threshold: 0,

@@ -10,6 +10,7 @@ interface AchievementsSliceState {
     lengthOfService: AchievementWithUserData | null
     stats: AchievementStats
     userData: UserData | null
+    queryAchievementId: number | null
 }
 
 const initialState: AchievementsSliceState = {
@@ -27,6 +28,7 @@ const initialState: AchievementsSliceState = {
         points: 0,
     },
     userData: null,
+    queryAchievementId: null,
 }
 
 const achievementsSlice = createSlice({
@@ -44,6 +46,13 @@ const achievementsSlice = createSlice({
             state.lengthOfService = lengthOfService;
             state.stats = stats;
             state.userData = userData;
+
+            const searchParams = new URLSearchParams(document.location.search);
+            const targetId = searchParams.get('id');
+
+            if (targetId != null) {
+                state.queryAchievementId = Number.parseInt(targetId);
+            }
         });
 
         builder.addCase(readAchievementAction.fulfilled, (state, action) => {
