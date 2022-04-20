@@ -72,18 +72,21 @@ const AchievementGroup: FC<Props> = ({group}) => {
     }
 
     const style = fixedHeight !== null ? {maxHeight: fixedHeight} : undefined;
+    const hasProgress = group.progress != null;
 
     return (
         <section className='achievement-group'>
             <details ref={detailsRef} className={detailsClass.join(' ')} open={isOpen} style={style}>
                 <summary ref={summaryRef} onClick={preventDefault}>
                     <div className='achievement-group__header'>
-                        <h3 className='achievement-group__title' onClick={handleClick}>
+                        <h3 className={`achievement-group__title${hasProgress ? '' : ' achievement-group__title_special'}`}
+                            onClick={handleClick}
+                        >
                             {group.title}
                         </h3>
-                        {group.progress != null && <AchievementGroupProgress progress={group.progress}/>}
+                        {hasProgress && <AchievementGroupProgress progress={group.progress!}/>}
                     </div>
-                    <hr className='achievement-group__line'/>
+                    <hr className={`achievement-group__line${hasProgress ? '' : ' achievement-group__line_special'}`}/>
                 </summary>
                 <AchievementsGrid ref={containerRef} achievements={group.achievements}/>
             </details>
