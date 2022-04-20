@@ -48,7 +48,7 @@ const AchievementRarity: FC<Props> = ({rarity, rarityLevel}) => {
                 {rarityLevelText} {translation.achievement}
             </p>
             <p className='achievement__rarity-text'>
-                {translation.wasReceived} {rarity}% {translation.users}
+                {translation.wasReceived} {new Intl.NumberFormat('uk').format(rarity)}% {translation.users}
             </p>
         </div>
     );
