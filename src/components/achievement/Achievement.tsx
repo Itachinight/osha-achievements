@@ -84,7 +84,7 @@ const Achievement: FC<Props> = ({achievement, isSpecial = false}) => {
                  ref.current = elem;
              }}
         >
-            <div ref={observe} className={achievementClassName.join(' ')} onClick={handleClick}>
+            <div className={achievementClassName.join(' ')} onClick={handleClick}>
                 <div className='achievement__front-face'>
                     <div className='achievement__body'>
                         <AchievementPicture
