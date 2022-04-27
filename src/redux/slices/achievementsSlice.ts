@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {AchievementGroup, AchievementStats, AchievementWithUserData, UserData} from '../../types';
 import {initialAchievementsLoad} from "../actions/initialAchievementsLoad";
 import {readAchievement as readAchievementAction} from "../actions/readAchievement";
+import {completedGroupRead} from "../actions/completedGroupRead";
 
 interface AchievementsSliceState {
     groups: AchievementGroup[]
@@ -11,6 +12,7 @@ interface AchievementsSliceState {
     stats: AchievementStats
     userData: UserData | null
     queryAchievementId: number | null
+    groupsToAnnounce: AchievementGroup[] | null
 }
 
 const initialState: AchievementsSliceState = {
@@ -29,6 +31,7 @@ const initialState: AchievementsSliceState = {
     },
     userData: null,
     queryAchievementId: null,
+    groupsToAnnounce: null,
 }
 
 const achievementsSlice = createSlice({
@@ -46,6 +49,7 @@ const achievementsSlice = createSlice({
             state.lengthOfService = lengthOfService;
             state.stats = stats;
             state.userData = userData;
+            state.groupsToAnnounce = groups.filter(({needToAnnounce}) => needToAnnounce);
 
             const searchParams = new URLSearchParams(document.location.search);
             const targetId = searchParams.get('id');
@@ -79,6 +83,10 @@ const achievementsSlice = createSlice({
                     break;
                 }
             }
+        });
+
+        builder.addCase(completedGroupRead.fulfilled, (state) => {
+            state.groupsToAnnounce = null;
         });
     },
 });

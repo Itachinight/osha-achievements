@@ -69,7 +69,7 @@ export interface AchievementWithUserData {
 export interface AchievementGroup {
     id: number
     title: string
-    isCompleteAnnounced: boolean
+    needToAnnounce: boolean
     progress?: Progress
     achievements: AchievementWithUserData[]
 }

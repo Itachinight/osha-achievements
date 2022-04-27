@@ -11,6 +11,7 @@ import AchievementModal from "./modals/AchievementDetailedModal";
 import {useTranslation} from "../hooks/useTranslation";
 import {initialAchievementsLoad} from "../redux/actions/initialAchievementsLoad";
 import {SCROLLBAR_WIDTH_PROPERTY_NAME} from "../config";
+import CompletedGroupModal from "./modals/CompletedGroupModal";
 
 const App: FC = () => {
     const translation = useTranslation();
@@ -31,6 +32,7 @@ const App: FC = () => {
                 <AchievementGroupsContainer/>
             </div>
             <AchievementModal/>
+            <CompletedGroupModal/>
         </TranslationContext.Provider>
     );
 }

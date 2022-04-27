@@ -8,3 +8,4 @@ export const lengthOfServiceAchievementSelector = (state: RootState) => state.ac
 export const queryAchievementIdSelector = (state: RootState) => state.achievements.queryAchievementId;
 export const modalActiveAchievementSelector = (state: RootState) => state.detailedAchievementModal.activeAchievement;
 export const modalRectSelector = (state: RootState) => state.detailedAchievementModal.rect;
+export const groupsToAnnounceSelector = (state: RootState) => state.achievements.groupsToAnnounce;
